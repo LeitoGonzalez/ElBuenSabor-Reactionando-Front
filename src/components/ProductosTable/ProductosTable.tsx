@@ -16,7 +16,7 @@ const ProductosTable = () => {
       descripcion: "",
       precio: 0,
       costo: 0,
-      tiempoEstimadoCocina: null,
+      tiempoEstimadoCocina: 0,
       marca: null,
       lote: null,
       detalleProductoCocinaList: [{
