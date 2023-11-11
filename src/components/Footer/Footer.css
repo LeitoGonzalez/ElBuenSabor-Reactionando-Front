@@ -1,0 +1,35 @@
+footer{
+    background-color: lightblue;
+}
+
+.footer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 96px;
+    color: hsl(22, 94%, 7%);
+    font-size: 16px;   
+}
+.footer> .logonav{
+    height: 64px;
+}
+.footer > .horario{
+    display: flex;
+    justify-content: space-between;
+    gap: 64px;
+}
+.footer > .horario > .tarde > p{
+    margin: 3px;
+}
+.footer > .horario > .mañana > p{
+    margin: 3px;
+}
+.footer > .ubicacion > p{
+    margin: 3px;
+}
+.footer > .redes{
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+    gap: 10px;
+}
