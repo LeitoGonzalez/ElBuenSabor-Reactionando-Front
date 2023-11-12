@@ -1,9 +1,10 @@
-import ProductosMenu from "../components/ProductoMenu/ProductosMenu";
+import Carrito from "../components/Carrito/Carrito";
+
 
 const Producto = () => {
   return (
     <>
-    <ProductosMenu/>
+    <Carrito/>
     </>
   );
 };

@@ -1,100 +1,37 @@
-import { useState } from "react";
-
-/* import { TypeCarrito } from "../../types/TypeCarrito"; */
-import { Table } from "react-bootstrap";
-import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito";
-import BotonRestar from "../BotonRestar/BotonRestar";
-import BotonSumar from "../BotonSumar/BotonSumar";
-import { Trash } from "react-bootstrap-icons";
+ import  { useState } from 'react' 
+ import { CarritoHeader } from '../CarritoHeader/CarritoHeader' 
+import ProductosList from '../ProductosList/ProductosList'
+ import { TypeDetalleCarrito } from '../../types/TypeDetalleCarrito'; 
 
 const Carrito = () => {
 
-
-
-
-  
-  //Variable que va a contener los productos seleccionados por el usuario
-  const [detalleCarrito, setDetalleCarrito] = useState<TypeDetalleCarrito[]>([]);
-
-
-  //Funcion para agregar al carrito
-/*   const agregarAlCarrito = (producto: TypeDetalleCarrito) => {
-    setDetalleCarrito((prevDetalleCarrito) => [...prevDetalleCarrito, producto]);
-  }; */
-
-
-  
-
-  // Función para restar la cantidad
-  const restarCantidad = (productoId: number) => {
-    setDetalleCarrito((prevDetalleCarrito) => {
-      return prevDetalleCarrito.map((detalle) => {
-        if (detalle.productoId === productoId && detalle.cantidad > 0) {
-          return { ...detalle, cantidad: detalle.cantidad - 1 };
-        }
-        return detalle;
-      });
-    });
-  };
-
-  // Función para sumar la cantidad
-   const sumarCantidad = (productoId: number) => {
-    setDetalleCarrito((prevDetalleCarrito) => {
-      return prevDetalleCarrito.map((detalle) => {
-        if (detalle.productoId === productoId) {
-          return { ...detalle, cantidad: detalle.cantidad + 1 };
-        }
-        return detalle;
-      });
-    });
-  };
-
-
+   const [detalleProducto,setDetalleProducto] = useState<TypeDetalleCarrito[]>([]); 
+   const [total,setTotal]= useState(0);
+  const [countProducts, setCountProducts] = useState(0); 
+	
 
   return (
-    <>
-      <h1>Carrito de Compras</h1>
-      
+    <div>
+       <CarritoHeader
+      detalleProducto={detalleProducto}
+      setDetalleProducto={setDetalleProducto}
+      total={total}
+      setTotal={setTotal}
+      countProducts={countProducts}
+      setCountProducts={setCountProducts}
+      /> 
 
-      <Table hover>
-          <thead>
-            <tr>
-              <th>Titulo</th>
-              <th>Descripcion</th>
-              <th>PrecioUnitario</th>
-              <th>Imagen</th>
-              <th>Cantidad</th>
-              <th>Sub Total</th>
-              <th>Eliminar</th>
-            </tr>
-          </thead>
-          <tbody>
-            {detalleCarrito.map((detalleCarrito) => (
-              <tr key={detalleCarrito.productoId}>
-                <td>{detalleCarrito.titulo}</td>
-                <td>{detalleCarrito.descripcion}</td>
-                <td>{detalleCarrito.precioVenta}</td>
-                <td>
-                  <img
-                    src={detalleCarrito.urlImagen}
-                    alt={detalleCarrito.titulo}
-                    style={{ width: "50px" }}
-                  />
-                </td>
-                <td>
-                <BotonRestar onClick={() => restarCantidad(detalleCarrito.productoId)} />
-                {detalleCarrito.cantidad}
-                <BotonSumar onClick={() => sumarCantidad(detalleCarrito.productoId)} />
-              </td>
-                <td>{detalleCarrito.subTotal}</td>
-                <td>
-                  <Trash/></td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-    </>
-  );
-};
+      <ProductosList
+       detalleProducto={detalleProducto}
+      setDetalleProducto={setDetalleProducto} 
+      /*total={total}
+      setTotal={setTotal}
+      countProducts={countProducts}
+      setCountProducts={setCountProducts} */
+      />
 
-export default Carrito ;
+      </div>
+  )
+}
+
+export default Carrito

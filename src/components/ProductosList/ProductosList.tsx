@@ -2,19 +2,34 @@ import { useEffect, useState } from "react";
 import { ProductoService } from "../../services/ProductoService";
 import { Producto } from "../../types/Producto";
 import { Button, Container, Table } from "react-bootstrap";
+import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito";
 /* import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito"; */
 
-/* interface ProductosMenuProps {
-  onClick: (detalle:TypeDetalleCarrito) => void;
-} */
+type ProductListProp={
+  detalleProducto: TypeDetalleCarrito[];
+  setDetalleProducto: React.Dispatch<React.SetStateAction<TypeDetalleCarrito[]>>;
+}
 
-const ProductosMenu = (/* {onClick}:ProductosMenuProps */) => {
+const ProductosList = ({detalleProducto,setDetalleProducto}:ProductListProp) => {
 
 
   //useState lista de productos
   const [productos, setProductos] = useState<Producto<"COCINA" | "BEBIDA">[]>();
 
+  const handleClick = (producto: Producto<"COCINA" | "BEBIDA">) => {
 
+    const detalleProductoItem : TypeDetalleCarrito={
+      cantidad: 1,
+      precioVenta: producto.precioVenta,
+      subTotal: producto.precioVenta,
+      productoId: producto.id,
+      titulo: producto.denominacion,
+      descripcion: producto.descripcion,
+      urlImagen: producto.urlImagen,
+    };
+    const updatedProducts = [...detalleProducto, detalleProductoItem];
+    setDetalleProducto(updatedProducts);
+  };
 
 
   //useEffect para obtener lista de productos
@@ -28,24 +43,6 @@ const ProductosMenu = (/* {onClick}:ProductosMenuProps */) => {
   }, []);
 
   console.log(JSON.stringify(productos, null, 2));
-
-  //Lógica para mandar el producto al carrito
-/*   const handleClick = (producto: Producto<"COCINA" | "BEBIDA">) => {
-    // Convertir el producto a TypeDetalleCarrito
-    const detalleCarritoProducto = {
-      cantidad: 1,
-      precioVenta: producto.precioVenta,
-      subTotal: producto.precioVenta,
-      productoId: producto.id,
-      titulo: producto.denominacion,
-      descripcion: producto.descripcion,
-      urlImagen: producto.urlImagen,
-    };
-
-    // Llamar a la función agregarAlCarrito con el producto convertido
-    onClick(detalleCarritoProducto);
-  };
-  */
 
   return (
     <>
@@ -80,7 +77,7 @@ const ProductosMenu = (/* {onClick}:ProductosMenuProps */) => {
                   ></img>
                 </td>
                 <td>
-                  <Button variant="primary" /* onClick={() => handleClick(producto)} */>Agregar a Carrito</Button>
+                  <Button variant="primary"  onClick={() => handleClick(producto)} >Agregar a Carrito</Button>
                 </td>
               </tr>
             ))}
@@ -91,4 +88,4 @@ const ProductosMenu = (/* {onClick}:ProductosMenuProps */) => {
     </>
   );
 };
-export default ProductosMenu;
+export default ProductosList;
