@@ -4,6 +4,7 @@ import {
   Form,
   FormGroup,
   FormLabel,
+  FormSelect,
   Modal,
   Row,
 } from "react-bootstrap";
@@ -73,11 +74,6 @@ const ProductoModal = ({
     }
   };
 
-  //Función para determinar el tipo de producto
-  const handleSelectChange = (e: ChangeEvent<HTMLControlElement>) => {
-    setTipoProducto(e.target.value);
-  };
-
   return (
     <>
       {modalType === ModalType.DELETE ? (
@@ -135,17 +131,18 @@ const ProductoModal = ({
                 </FormGroup> */}
 
                 <FormGroup controlId="formTipoProducto">
-                  <FormLabel>TipoProducto</FormLabel>
-                  <select 
+                  <FormLabel>Tipo de producto</FormLabel>
+                  <FormSelect 
                     name="tipoProducto" 
                     id="tipoProducto" 
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.tipoProducto}
                   >
+                      <option value="">Seleccionar</option>
                       <option value="Cocina">Cocina</option>
                       <option value="Insumo">Insumo</option>
-                  </select>
+                  </FormSelect>
                   <Form.Control.Feedback type="invalid">
                     {formik.errors.denominacion}
                   </Form.Control.Feedback>
@@ -289,7 +286,6 @@ const ProductoModal = ({
                   <Button
                     variant="primary"
                     type="submit"
-                    disabled={formik.isValid}
                   >
                     {" "}
                     {/* submit */}
