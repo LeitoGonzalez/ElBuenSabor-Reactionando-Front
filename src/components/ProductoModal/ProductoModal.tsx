@@ -12,6 +12,7 @@ import { DTOProductoRequest } from "../../types/DTOProductoRequest";
 import { ProductoService } from "../../services/ProductoService";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { ChangeEvent, useState } from "react";
 
 type ProductoModalProps = {
   show: boolean;
@@ -30,12 +31,7 @@ const validationSchema = () => {
     descripcion: Yup.string().required("Debe poner una descripcion"),
     precio: Yup.number().min(0).required("El precio es obligatorio"),
     costo: Yup.number().min(0).required("El costo es obligatorio"),
-    tipoProducto: Yup.string().required("Elije un tipo de producto"),
-    lote: Yup.number().integer().min(0),
-    tiempoEstimadoCocina: Yup.number()
-      .integer()
-      .min(1)
-      .required("Ingresa el tiempo estimado de cocina"),
+    tipoProducto: Yup.string().required("Elije un tipo de producto")
   });
 };
 
@@ -47,6 +43,8 @@ const ProductoModal = ({
   producto,
   refreshData,
 }: ProductoModalProps) => {
+  const [tipoProducto, setTipoProducto] = useState("");
+
   //Formulario
   const formik = useFormik({
     initialValues: producto,
@@ -73,6 +71,11 @@ const ProductoModal = ({
     } catch (error) {
       console.error(error);
     }
+  };
+
+  //Función para determinar el tipo de producto
+  const handleSelectChange = (e: ChangeEvent<HTMLControlElement>) => {
+    setTipoProducto(e.target.value);
   };
 
   return (
@@ -113,17 +116,35 @@ const ProductoModal = ({
               {" "}
               {/* Acá va el formulario entero */}
               <Form onSubmit={formik.handleSubmit}>
+                {/* <FormGroup controlId="formTipoProducto">
+                  <FormLabel>Tipo de producto</FormLabel>
+                  <Form.Control
+                    as="select"
+                    name="tipoProducto"
+                    value={tipoProducto}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isInvalid={Boolean(
+                      formik.errors.tipoProducto && formik.touched.tipoProducto
+                    )}
+                  >
+                    <option value="">Selecciona...</option>
+                    <option value="Cocina">Cocina</option>
+                    <option value="Insumo">Insumo</option>
+                  </Form.Control>
+                </FormGroup> */}
+
                 <FormGroup controlId="formTipoProducto">
                   <FormLabel>TipoProducto</FormLabel>
-                  <select
-                    name="tipoProducto"
-                    id="tipoProducto"
+                  <select 
+                    name="tipoProducto" 
+                    id="tipoProducto" 
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.tipoProducto}
                   >
-                    <option value="Cocina">Cocina</option>
-                    <option value="Insumo">Insumo</option>
+                      <option value="Cocina">Cocina</option>
+                      <option value="Insumo">Insumo</option>
                   </select>
                   <Form.Control.Feedback type="invalid">
                     {formik.errors.denominacion}
@@ -202,66 +223,64 @@ const ProductoModal = ({
                     </FormGroup>
                   </Col>
                 </Row>
-                <>
-                  {formik.values.tipoProducto === "Insumo" ? (
-                    <>
-                      <FormGroup controlId="marca">
-                        <FormLabel>Marca</FormLabel>
-                        <Form.Control
-                          name="marca"
-                          type="string"
-                          value={formik.values.marca || ""}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          isInvalid={Boolean(
-                            formik.errors.marca && formik.touched.marca
-                          )}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {formik.errors.marca}
-                        </Form.Control.Feedback>
-                      </FormGroup>
 
-                      <FormGroup controlId="lote">
-                        <FormLabel>Lote</FormLabel>
-                        <Form.Control
-                          name="lote"
-                          type="number"
-                          value={formik.values.lote || ""}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          isInvalid={Boolean(
-                            formik.errors.lote && formik.touched.lote
-                          )}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {formik.errors.lote}
-                        </Form.Control.Feedback>
-                      </FormGroup>
-                    </>
-                  ) : (
-                    <>
-                      <FormGroup controlId="tiempoEstimadoCocina">
-                        <FormLabel>Tiempo de cocina estimado</FormLabel>
-                        <Form.Control
-                          name="tiempoEstimadoCocina"
-                          type="number"
-                          value={formik.values.tiempoEstimadoCocina || ""}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          isInvalid={Boolean(
-                            formik.errors.tiempoEstimadoCocina &&
-                              formik.touched.tiempoEstimadoCocina
-                          )}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {formik.errors.tiempoEstimadoCocina}
-                        </Form.Control.Feedback>
-                      </FormGroup>
-                      <p>Implementar selección de ingredientes</p>
-                    </>
-                  )}
-                </>
+                {formik.values.tipoProducto === "Insumo" ? (
+                  <>
+                    <FormGroup controlId="marca">
+                      <FormLabel>Marca</FormLabel>
+                      <Form.Control
+                        name="marca"
+                        type="string"
+                        value={formik.values.marca || ""}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        isInvalid={Boolean(
+                          formik.errors.marca && formik.touched.marca
+                        )}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {formik.errors.marca}
+                      </Form.Control.Feedback>
+                    </FormGroup>
+
+                    <FormGroup controlId="lote">
+                      <FormLabel>Lote</FormLabel>
+                      <Form.Control
+                        name="lote"
+                        type="string"
+                        value={formik.values.lote || ""}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        isInvalid={Boolean(
+                          formik.errors.lote && formik.touched.lote
+                        )}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {formik.errors.lote}
+                      </Form.Control.Feedback>
+                    </FormGroup>
+                  </>
+                ) : (
+                  <>
+                    <FormGroup controlId="tiempoEstimadoCocina">
+                      <FormLabel>Tiempo de cocina estimado</FormLabel>
+                      <Form.Control
+                        name="tiempoEstimadoCocina"
+                        type="number"
+                        value={formik.values.tiempoEstimadoCocina || ""}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        isInvalid={Boolean(
+                          formik.errors.tiempoEstimadoCocina && formik.touched.tiempoEstimadoCocina
+                        )}
+                      />
+                      <Form.Control.Feedback type="invalid">
+                        {formik.errors.tiempoEstimadoCocina}
+                      </Form.Control.Feedback>
+                    </FormGroup>
+                    <p>Implementar selección de ingredientes</p>
+                  </>
+                )}
 
                 <Modal.Footer>
                   <Button variant="secondary" onClick={onHide}>
@@ -270,7 +289,7 @@ const ProductoModal = ({
                   <Button
                     variant="primary"
                     type="submit"
-                    disabled={!formik.isValid}
+                    disabled={formik.isValid}
                   >
                     {" "}
                     {/* submit */}
