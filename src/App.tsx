@@ -9,9 +9,7 @@ function App() {
     <>
       <Router>
         <Header />
-        <Container
-          style={{ minHeight: "100vh", minWidth: "100%", padding: "0" }}
-        >
+        <Container>
           <AppRoutes />
         </Container>
         <Footer />
