@@ -3,6 +3,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0px 96px;
+
 }
 .header > img{
     height: 64px;
@@ -25,6 +26,7 @@
     padding: 0px 96px;
     margin: 0px;
     background-color: lightblue;
+    position: sticky;
 }
 .nav > .contenedor{
     display: flex;
