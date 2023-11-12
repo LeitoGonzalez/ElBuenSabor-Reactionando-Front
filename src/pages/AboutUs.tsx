@@ -1,3 +1,3 @@
 export const AboutUs = () => {
-  return <AboutUs />;
+  return <></>;
 };
