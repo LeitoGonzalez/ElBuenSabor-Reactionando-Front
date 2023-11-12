@@ -17,8 +17,8 @@ const ProductosTable = () => {
       precio: 0,
       costo: 0,
       tiempoEstimadoCocina: 0,
-      marca: null,
-      lote: null,
+      marca: "",
+      lote: 0,
       detalleProductoCocinaList: [{
         ingrediente: {
           id: 1
@@ -61,7 +61,7 @@ const ProductosTable = () => {
   console.log(JSON.stringify(productos, null, 2));
 
   //Lógica para elegir el modal y mostrarlo
-  const handleClick = (
+  const handleClickAdd = (
     newTitle: string,
     dtoProducto: DTOProductoRequest,
     modal: ModalType
@@ -77,7 +77,7 @@ const ProductosTable = () => {
       <Container className="mt-4">
         <Button
           onClick={() =>
-            handleClick(
+            handleClickAdd(
               "Nuevo producto",
               initDTOProductoRequest(),
               ModalType.CREATE
@@ -119,7 +119,7 @@ const ProductosTable = () => {
                   ></img>
                 </td>
                 <td>
-                  <Button variant="primary">Editar</Button>
+                  <Button variant="primary" /* onClick={() => handleClick("Editar producto", producto, ModalType.UPDATE)} */>Editar</Button>
                 </td>
                 <td>
                   <Button variant="danger">Borrar</Button>
