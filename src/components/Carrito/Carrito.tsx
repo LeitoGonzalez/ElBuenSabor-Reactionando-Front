@@ -9,22 +9,20 @@ import { Trash } from "react-bootstrap-icons";
 
 const Carrito = () => {
 
-    //Codigo para ver si el carrito no tiene ningun producto (es nuevo) o ya tiene algo
-/*   const initializableNewCarrito = (): Carrito => {
-    return {
-      total:0,
-      detalleCarrito:[]
-    };
-  }; 
 
-  
-  const [carrito,setCarrito] = useState<Carrito>(initializableNewCarrito)
-  */ 
 
 
   
   //Variable que va a contener los productos seleccionados por el usuario
   const [detalleCarrito, setDetalleCarrito] = useState<TypeDetalleCarrito[]>([]);
+
+
+  //Funcion para agregar al carrito
+/*   const agregarAlCarrito = (producto: TypeDetalleCarrito) => {
+    setDetalleCarrito((prevDetalleCarrito) => [...prevDetalleCarrito, producto]);
+  }; */
+
+
   
 
   // Función para restar la cantidad
@@ -99,4 +97,4 @@ const Carrito = () => {
   );
 };
 
-export default Carrito;
+export default Carrito ;

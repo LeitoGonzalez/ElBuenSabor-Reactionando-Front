@@ -1,6 +1,7 @@
 
 
 export interface TypeDetalleCarrito{
+    id: number;
     cantidad: number;
     precioVenta: number;
     subTotal: number;
