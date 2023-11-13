@@ -71,8 +71,7 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
             <tr>
               <th>Denominacion</th>
               <th>Descripcion</th>
-              <th>Costo</th>
-              <th>Precio de venta</th>
+              <th>Precio</th>
               <th>Rubro</th>
               <th>Imagen</th>
               <th>Carrito</th>
@@ -84,7 +83,6 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
               <tr key={producto.id}>
                 <td>{producto.denominacion}</td>
                 <td>{producto.descripcion}</td>
-                <td>{producto.costo}</td>
                 <td>{producto.precioVenta}</td>
                 <td>{producto.rubroProducto.denominacion}</td>
                 <td>

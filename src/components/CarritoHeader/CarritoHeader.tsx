@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { TypeDetalleCarrito } from '../../types/TypeDetalleCarrito';
+import PagoModal from '../PagoModal/PagoModal';
 
 
 type CarritoHeaderProps={
@@ -20,6 +21,7 @@ export const CarritoHeader = ({
 	setCountProducts,
 	setTotal
 }:CarritoHeaderProps) => {
+
 	const [active, setActive] = useState(false);
 
 	const onDeleteProduct = (product:TypeDetalleCarrito) => {
@@ -37,6 +39,12 @@ export const CarritoHeader = ({
 		setTotal(0);
 		setCountProducts(0);
 	};
+
+	const onConfirmar=()=>{
+		setShowModal(true);
+
+	}
+	const [showModal,setShowModal]=useState(false)
 
 	const handleAgregar=(product:TypeDetalleCarrito)=>{
 		const products = detalleProducto.map(item =>
@@ -62,6 +70,7 @@ export const CarritoHeader = ({
 	}
 
 	return (
+		<>
 		<header>
 			<h1>Tienda</h1>
 
@@ -139,6 +148,9 @@ export const CarritoHeader = ({
 							<button className='btn-clear-all' onClick={onCleanCart}>
 								Vaciar Carrito
 							</button>
+							<button className='btn-confirmar' onClick={onConfirmar}>
+								Confirmar Compra
+							</button>
 						</>
 					) : (
 						<p className='cart-empty'>El carrito está vacío</p>
@@ -146,5 +158,14 @@ export const CarritoHeader = ({
 				</div>
 			</div>
 		</header>
+			{showModal && (
+			<PagoModal
+			show={showModal}
+			onHide={() => setShowModal(false)}
+			detalleCarrito={detalleProducto}
+			total={total}
+			/>
+		)}
+		</>
 	);
 };
