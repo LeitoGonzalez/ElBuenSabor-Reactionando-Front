@@ -1,5 +1,5 @@
 import { Button, Form, Nav } from "react-bootstrap";
-import { Cart, Search } from "react-bootstrap-icons";
+import { Search } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 
@@ -36,12 +36,6 @@ const Header = () => {
         <Nav.Link onClick={() => navigate("/historial")}>Historial</Nav.Link>
         <Nav.Link onClick={() => navigate("/aboutus")}>Sobre Nosotros</Nav.Link>
         <Nav.Link onClick={() => navigate("/contacto")}>Contacto</Nav.Link>
-
-        <Nav.Link onClick={() => navigate("/carrito")}>
-          <Button>
-            <Cart />
-          </Button>
-        </Nav.Link>
       </div>
     </>
   );
