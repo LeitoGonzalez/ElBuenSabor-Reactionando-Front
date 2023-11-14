@@ -1,9 +1,9 @@
 export interface DTOIngrediente {
   id: number;
   denominacion: string;
-  fechaHoraAlta: Date;
-  fechaHoraBaja: Date;
-  fechaHoraModificacion: Date;
+  fechaHoraAlta: string;
+  fechaHoraBaja: string;
+  fechaHoraModificacion: string;
   precioCompra: number;
   stockActual: number;
   stockMinimo: number;
