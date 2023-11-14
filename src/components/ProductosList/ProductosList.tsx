@@ -4,7 +4,6 @@ import { Button, Container, Table } from "react-bootstrap";
 import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito";
 import { DTOProducto } from "../../types/DTOProducto";
 
-
 /* import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito"; */
 type ProductListProp={
   detalleProducto: TypeDetalleCarrito[];
@@ -20,14 +19,16 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
   //useState lista de productos
   const [productos, setProductos] = useState<DTOProducto[]>();
 
-  //Actualizar carrito
+
+  const handleClick = (producto: DTOProducto) => {
+
 
   const handleClick = (producto: DTOProducto) => {
 
     const detalleProductoItem : TypeDetalleCarrito ={
       cantidad: 1,
       precioVenta: producto.costo,
-      subTotal: producto.precio,
+      subTotal: producto.costo,
       productoId: producto.id,
       titulo: producto.denominacion,
       descripcion: producto.descripcion,
@@ -49,7 +50,7 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
     const updatedProducts = [...detalleProducto, detalleProductoItem];
     setDetalleProducto(updatedProducts);
     setCountProducts(countProducts+1);
-    setTotal(total+(detalleProductoItem.cantidad*producto.precioVenta))
+    setTotal(total+(detalleProductoItem.cantidad*producto.costo))
   };
 
   //useEffect para obtener lista de productos
@@ -87,7 +88,6 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
                 <td>{producto.denominacion}</td>
                 <td>{producto.descripcion}</td>
                 <td>{producto.costo}</td>
-                <td>{producto.precio}</td>
                 <td>{producto.rubroProducto?.denominacion}</td>
                 <td>
                   <img
