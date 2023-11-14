@@ -9,18 +9,17 @@ import {
   Row,
 } from "react-bootstrap";
 import { ModalType } from "../../types/ModalType";
-import { DTOProductoRequest } from "../../types/DTOProductoRequest";
+import { DTOProducto } from "../../types/DTOProducto";
 import { ProductoService } from "../../services/ProductoService";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { ChangeEvent, useState } from "react";
 
 type ProductoModalProps = {
   show: boolean;
   onHide: () => void;
   title: string;
   modalType: ModalType;
-  producto: DTOProductoRequest;
+  producto: DTOProducto;
   refreshData: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -44,7 +43,6 @@ const ProductoModal = ({
   producto,
   refreshData,
 }: ProductoModalProps) => {
-  const [tipoProducto, setTipoProducto] = useState("");
 
   //Formulario
   const formik = useFormik({
@@ -52,17 +50,17 @@ const ProductoModal = ({
     validationSchema: validationSchema(),
     validateOnBlur: true,
     validateOnChange: true,
-    onSubmit: (obj: DTOProductoRequest) => handleSaveUpdate(obj),
+    onSubmit: (obj: DTOProducto) => handleSaveUpdate(obj),
   });
 
   //Función para crear o actualizar
-  const handleSaveUpdate = async (producto: DTOProductoRequest) => {
+  const handleSaveUpdate = async (producto: DTOProducto) => {
     try {
       const isNew = producto.id === 0;
       if (isNew) {
         await ProductoService.createProduct(producto);
       } else {
-        console.log("Acá va el update");
+        await ProductoService.updateProduct(producto, producto.id);
       }
 
       console.log("A");
@@ -73,6 +71,17 @@ const ProductoModal = ({
       console.error(error);
     }
   };
+
+  const handleDelete = async (producto: DTOProducto) => {
+    try{
+      await ProductoService.deleteProduct(producto.id);
+
+      onHide();
+      refreshData((prevState) => !prevState);
+    }catch (error){
+      console.error(error);
+    }
+  }
 
   return (
     <>
@@ -93,7 +102,7 @@ const ProductoModal = ({
               <Button variant="secondary" onClick={onHide}>
                 Cancelar
               </Button>
-              <Button variant="danger" onClick={onHide}>
+              <Button variant="danger" onClick={() => handleDelete(producto)}>
                 {" "}
                 {/* handleDelete */}
                 Eliminar
