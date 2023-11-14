@@ -34,10 +34,6 @@ const PagoModal = ({ show, detalleCarrito, onHide, total }: PagoModalProps) => {
     const detallePedidos = detalleCarrito.map((detalleCarrito) => ({
       cantidad: detalleCarrito.cantidad,
       subtotal: detalleCarrito.subTotal,
-      producto: {
-        id: detalleCarrito.productoId
-      }
-
     }));
     console.log(detallePedidos);
     const pedido: Pedido = {
@@ -47,7 +43,7 @@ const PagoModal = ({ show, detalleCarrito, onHide, total }: PagoModalProps) => {
       estado: EstadoPedido.A_CONFIRMAR,
       tipoEnvio: tipoEnvio,
       total: total,
-      detallePedido: detallePedidos
+      /*         detallePedido: detallePedidos,  */
     };
     handleSaveUpdate(pedido);
     onHide;

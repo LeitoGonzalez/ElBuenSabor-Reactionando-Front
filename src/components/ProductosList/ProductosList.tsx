@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { ProductoService } from "../../services/ProductoService";
+import { Producto } from "../../types/Producto";
 import { Button, Container, Table } from "react-bootstrap";
 import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito";
-import { DTOProducto } from "../../types/DTOProducto";
-
 /* import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito"; */
+
 type ProductListProp={
   detalleProducto: TypeDetalleCarrito[];
   setDetalleProducto: React.Dispatch<React.SetStateAction<TypeDetalleCarrito[]>>;
@@ -16,24 +16,20 @@ type ProductListProp={
 
 const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countProducts,setCountProducts}:ProductListProp) => {
 
+
   //useState lista de productos
-  const [productos, setProductos] = useState<DTOProducto[]>();
+  const [productos, setProductos] = useState<Producto<"COCINA" | "BEBIDA">[]>();
 
+  const handleClick = (producto: Producto<"COCINA" | "BEBIDA">) => {
 
-  const handleClick = (producto: DTOProducto) => {
-
-
-  const handleClick = (producto: DTOProducto) => {
-
-    const detalleProductoItem : TypeDetalleCarrito ={
+    const detalleProductoItem : TypeDetalleCarrito={
       cantidad: 1,
-      precioVenta: producto.costo,
-      subTotal: producto.costo,
+      precioVenta: producto.precioVenta,
+      subTotal: producto.precioVenta,
       productoId: producto.id,
       titulo: producto.denominacion,
       descripcion: producto.descripcion,
       urlImagen: producto.urlImagen,
-      id: 0
     };
 
     if (detalleProducto.find(item => item.productoId === producto.id)) {
@@ -50,11 +46,11 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
     const updatedProducts = [...detalleProducto, detalleProductoItem];
     setDetalleProducto(updatedProducts);
     setCountProducts(countProducts+1);
-    setTotal(total+(detalleProductoItem.cantidad*producto.costo))
+    setTotal(total+(detalleProductoItem.cantidad*producto.precioVenta))
   };
 
-  //useEffect para obtener lista de productos
 
+  //useEffect para obtener lista de productos
   useEffect(() => {
     const fetchProductos = async () => {
       const productoList = await ProductoService.getProductosList();
@@ -87,8 +83,8 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
               <tr key={producto.id}>
                 <td>{producto.denominacion}</td>
                 <td>{producto.descripcion}</td>
-                <td>{producto.costo}</td>
-                <td>{producto.rubroProducto?.denominacion}</td>
+                <td>{producto.precioVenta}</td>
+                <td>{producto.rubroProducto.denominacion}</td>
                 <td>
                   <img
                     src={producto.urlImagen}
