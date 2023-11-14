@@ -99,7 +99,7 @@ const ProductosTable = () => {
               <th>Rubro</th>
               <th>Imagen</th>
               <th>Editar</th>
-              <th>Borrar</th>
+              <th>Baja</th>
             </tr>
           </thead>
           {/* Contenido con .map */}
@@ -122,7 +122,7 @@ const ProductosTable = () => {
                   <Button variant="primary" onClick={() => handleClick("Editar producto", producto, ModalType.UPDATE)}>Editar</Button>
                 </td>
                 <td>
-                  <Button variant="danger" onClick={() => handleClick("Eliminar producto", producto, ModalType.DELETE)}>Borrar</Button>
+                  <Button variant="danger" onClick={() => handleClick("Eliminar producto", producto, ModalType.DELETE)}>Dar de baja</Button>
                 </td>
               </tr>
             ))}
