@@ -8,9 +8,7 @@ function App() {
     <>
       <Router>
         <Header />
-        <Container>
           <AppRoutes />
-        </Container>
         <Footer />
       </Router>
     </>
