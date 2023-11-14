@@ -7,13 +7,6 @@
 	box-sizing: border-box;
 }
 
-body {
-	margin: 0 auto;
-	max-width: 1200px;
-	font-family: 'Lato';
-	color: #333;
-}
-
 .icon-cart {
 	width: 40px;
 	height: 40px;
@@ -25,7 +18,7 @@ body {
 }
 
 img {
-    max-width: 100%;
+	max-width: 100%;
 }
 
 /* Header */
@@ -52,8 +45,7 @@ header {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-  border-radius: 50%;
-
+	border-radius: 50%;
 }
 
 #contador-productos {
@@ -83,7 +75,7 @@ header {
 
 .info-cart-product {
 	display: flex;
-  justify-content: space-between;
+	justify-content: space-between;
 	flex: 0.8;
 }
 
@@ -204,7 +196,6 @@ header {
 	display: block;
 	width: 100%;
 	margin-top: 10px;
-
 	font-family: inherit;
 	cursor: pointer;
   font-size: 16px;
@@ -235,4 +226,5 @@ header {
     transform: scale(1.03);
     border-radius: 0;
   }
+
 
