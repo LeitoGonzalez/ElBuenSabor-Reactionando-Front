@@ -1,6 +1,10 @@
+import Carrito from "../components/Carrito/Carrito";
+
+
 const Producto = () => {
   return (
     <>
+    <Carrito/>
     </>
   );
 };
