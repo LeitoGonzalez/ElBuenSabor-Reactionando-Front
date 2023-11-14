@@ -3,8 +3,8 @@ import { ProductoService } from "../../services/ProductoService";
 import { Button, Container, Table } from "react-bootstrap";
 import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito";
 import { DTOProducto } from "../../types/DTOProducto";
-/* import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito"; */
 
+/* import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito"; */
 type ProductListProp={
   detalleProducto: TypeDetalleCarrito[];
   setDetalleProducto: React.Dispatch<React.SetStateAction<TypeDetalleCarrito[]>>;
@@ -16,13 +16,16 @@ type ProductListProp={
 
 const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countProducts,setCountProducts}:ProductListProp) => {
 
-
   //useState lista de productos
   const [productos, setProductos] = useState<DTOProducto[]>();
 
+
   const handleClick = (producto: DTOProducto) => {
 
-    const detalleProductoItem : TypeDetalleCarrito={
+
+  const handleClick = (producto: DTOProducto) => {
+
+    const detalleProductoItem : TypeDetalleCarrito ={
       cantidad: 1,
       precioVenta: producto.costo,
       subTotal: producto.costo,
@@ -30,6 +33,7 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
       titulo: producto.denominacion,
       descripcion: producto.descripcion,
       urlImagen: producto.urlImagen,
+      id: 0
     };
 
     if (detalleProducto.find(item => item.productoId === producto.id)) {
@@ -49,8 +53,8 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
     setTotal(total+(detalleProductoItem.cantidad*producto.costo))
   };
 
-
   //useEffect para obtener lista de productos
+
   useEffect(() => {
     const fetchProductos = async () => {
       const productoList = await ProductoService.getProductosList();
