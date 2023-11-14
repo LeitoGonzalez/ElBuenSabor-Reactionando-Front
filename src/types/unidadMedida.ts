@@ -2,7 +2,7 @@ export interface UnidadMedida {
   id: number;
   abreviatura: string;
   denominacion: string;
-  fechaHoraAlta: Date;
-  fechaHoraBaja: Date | null;
-  fechaHoraModificacion: Date | null;
+  fechaHoraAlta: string;
+  fechaHoraBaja: string | null;
+  fechaHoraModificacion: string | null;
 }

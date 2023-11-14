@@ -18,7 +18,7 @@
 }
 
 img {
-    max-width: 100%;
+	max-width: 100%;
 }
 
 /* Header */
@@ -45,7 +45,7 @@ header {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-    border-radius: 50%;
+	border-radius: 50%;
 }
 
 #contador-productos {
@@ -75,7 +75,7 @@ header {
 
 .info-cart-product {
 	display: flex;
-    justify-content: space-between;
+	justify-content: space-between;
 	flex: 0.8;
 }
 
@@ -148,6 +148,7 @@ header {
 	border-radius: 10px 10px 0 0;
 	transition: all 0.5s;
 }
+
 .item figure {
 	overflow: hidden;
 }
@@ -182,11 +183,30 @@ header {
 	padding: 20px;
 	text-align: center;
 }
+
 .hidden {
 	display: none;
 }
 
 .btn-clear-all {
+	border: none;
+	background-color: #000;
+	color: #fff;
+	padding: 15px 0;
+	display: block;
+	width: 100%;
+	margin-top: 10px;
+	font-family: inherit;
+	cursor: pointer;
+  font-size: 16px;
+  transition: all .3s ease;
+}
+.btn-clear-all:hover{
+    background-color: #333;
+    border-radius: 0;
+  }
+
+.btn-confirmar {
 	border: none;
 	background-color: #000;
 	color: #fff;
@@ -201,9 +221,10 @@ header {
   font-size: 16px;
   transition: all .3s ease;
 }
+.btn-confirmar:hover{
+    background-color: #333;
+    transform: scale(1.03);
+    border-radius: 0;
+  }
 
-.btn-clear-all:hover{
-  background-color: #333;
-  transform: scale(1.03);
-  border-radius: 0;
-}
+
