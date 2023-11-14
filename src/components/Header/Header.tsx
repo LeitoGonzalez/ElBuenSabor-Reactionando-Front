@@ -13,10 +13,10 @@ const Header = () => {
           <img src="src/assets/Logo.png" alt="logo" />
         </Nav.Link>
         <div className="botones">
-          <Button variant="primary" className="reg">
+          <Button variant="primary" className="login">
             Iniciar Sesión
           </Button>
-          <Button variant="primary" className="login">
+          <Button variant="primary" className="reg">
             Registrarse
           </Button>
         </div>

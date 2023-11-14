@@ -1,4 +1,4 @@
-import { Button, Form, FormLabel, Modal } from "react-bootstrap";
+import { Button, Form, FormLabel, FormSelect, Modal } from "react-bootstrap";
 import { DTOIngrediente } from "../../types/DTOIngrediente";
 import { ModalType } from "../../types/ModalType";
 
@@ -7,12 +7,16 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { IngredieteService } from "../../services/IngredienteService";
 
+//Notificacion para el usuario
+import { toast } from "react-toastify";
+
 type IngredientModalProps = {
   show: boolean;
   onHide: () => void;
   title: string;
   modalType: ModalType;
   ingredient: DTOIngrediente;
+  refreshData: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const IngredienteModal = ({
@@ -21,6 +25,7 @@ const IngredienteModal = ({
   title,
   modalType,
   ingredient,
+  refreshData,
 }: IngredientModalProps) => {
   //CREATE - ACTUALIZAR
   const handleSaveUpdate = async (ingredient: DTOIngrediente) => {
@@ -31,9 +36,14 @@ const IngredienteModal = ({
       } else {
         await IngredieteService.updateIngrediente(ingredient.id, ingredient);
       }
+      toast.success(isNew ? "Ingrediente creado" : "Ingrediente actualizado", {
+        position: "top-center",
+      });
       onHide();
+      refreshData((prevState) => !prevState);
     } catch (error) {
       console.error(error);
+      toast.error("Ha ocurrido un error");
     }
   };
 
@@ -41,9 +51,14 @@ const IngredienteModal = ({
   const handleDelete = async (ingredient: DTOIngrediente) => {
     try {
       await IngredieteService.deleteIngrediente(ingredient.id);
+      toast.success("Ingrediente eliminado con exito", {
+        position: "top-center",
+      });
       onHide();
+      refreshData((prevState) => !prevState);
     } catch (error) {
       console.error(error);
+      toast.error("Ha ocurrido un error");
     }
   };
 
@@ -55,7 +70,7 @@ const IngredienteModal = ({
         "El nombre del ingrediente es requerido"
       ),
       precioCompra: Yup.number().min(0).required("El precio es obligatorio"),
-      unidadMedida: Yup.string().required("La unidad de medida es requerido"),
+      tipoUnidadMedida: Yup.string().required("Elije una unidad de medida"),
       rubroIngrediente: Yup.string().required(
         "El rubro del Ingrediente es requerido"
       ),
@@ -75,35 +90,31 @@ const IngredienteModal = ({
   return (
     <>
       {modalType === ModalType.DELETE ? (
-        <Modal show={show} onHide={onHide} centered backdrop="static">
-          <Modal.Header closeButton>
-            <Modal.Title>{title}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>
-              ¿Desea eliminar el ingrediente{" "}
-              <strong>{ingredient.denominacion}</strong>?
-            </p>
-          </Modal.Body>
+        <>
+          <Modal show={show} onHide={onHide} centered backdrop="static">
+            <Modal.Header>
+              <Modal.Title>{title}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>
+                ¿Desea eliminar el ingrediente{" "}
+                <strong>{ingredient.denominacion}</strong>?
+              </p>
+            </Modal.Body>
 
-          <Modal.Footer className="mt-4">
-            <Button variant="secondary" onClick={onHide}>
-              Cancelar
-            </Button>
-            <Button variant="danger" onClick={() => handleDelete(ingredient)}>
-              Eliminar
-            </Button>
-          </Modal.Footer>
-        </Modal>
+            <Modal.Footer className="mt-4">
+              <Button variant="secondary" onClick={onHide}>
+                Cancelar
+              </Button>
+              <Button variant="danger" onClick={() => handleDelete(ingredient)}>
+                Eliminar
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
       ) : (
         <>
-          <Modal
-            show={show}
-            onHide={onHide}
-            centered
-            backdrop="static"
-            className="modal-xl"
-          >
+          <Modal show={show} onHide={onHide} centered backdrop="static">
             <Modal.Header>
               <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
@@ -114,7 +125,7 @@ const IngredienteModal = ({
                   <Form.Control
                     name="denominación"
                     type="text"
-                    value={formikIngrediente.values.denominacion || ""}
+                    value={formikIngrediente.values.denominacion || " "}
                     onChange={formikIngrediente.handleChange}
                     onBlur={formikIngrediente.handleBlur}
                     isInvalid={Boolean(
@@ -145,46 +156,44 @@ const IngredienteModal = ({
                   </Form.Control.Feedback>
                 </Form.Group>
 
-                <Form.Group controlId="formunidadMedida">
-                  <FormLabel> Unidad de Medida</FormLabel>
-                  <Form.Control
-                    name="unidadMedida"
-                    type="text"
-                    value={
-                      formikIngrediente.values.unidadMedida.denominacion || ""
-                    }
+                <Form.Group controlId="formTipoUnidadMedida">
+                  <FormLabel>Unidad de Medida</FormLabel>
+                  <FormSelect
+                    name="tipoUnidadMedida"
+                    id="unidadMedida"
                     onChange={formikIngrediente.handleChange}
                     onBlur={formikIngrediente.handleBlur}
-                    isInvalid={Boolean(
-                      formikIngrediente.errors.unidadMedida?.denominacion &&
-                        formikIngrediente.touched.unidadMedida?.denominacion
-                    )}
-                  />
+                    value={formikIngrediente.values.unidadMedida.denominacion}
+                  >
+                    <option value="">Seleccionar</option>
+                    <option value="Gramo">Gramos</option>
+                    <option value="Unidad">Unidad</option>
+                  </FormSelect>
                   <Form.Control.Feedback type="invalid">
-                    {formikIngrediente.errors.unidadMedida?.denominacion}
+                    {formikIngrediente.errors.denominacion}
                   </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Group controlId="formrubroIngrediente">
-                  <FormLabel> Rubro de Ingrediente</FormLabel>
-                  <Form.Control
-                    name="rubroIngrediente"
-                    type="text"
-                    value={
-                      formikIngrediente.values.rubroIngrediente.denominacion ||
-                      ""
-                    }
+                  <FormLabel>Rubro Ingrediente</FormLabel>
+                  <FormSelect
+                    name="formrubroIngrediente"
+                    id="rubroIngrediente"
                     onChange={formikIngrediente.handleChange}
                     onBlur={formikIngrediente.handleBlur}
-                    isInvalid={Boolean(
-                      formikIngrediente.errors.rubroIngrediente?.denominacion &&
-                        formikIngrediente.touched.rubroIngrediente?.denominacion
-                    )}
-                  />
+                    value={
+                      formikIngrediente.values.rubroIngrediente.denominacion
+                    }
+                  >
+                    <option value="">Seleccionar</option>
+                    <option value="Gramo">Verdura</option>
+                    <option value="Unidad">Condimento</option>
+                  </FormSelect>
                   <Form.Control.Feedback type="invalid">
-                    {formikIngrediente.errors.rubroIngrediente?.denominacion}
+                    {formikIngrediente.errors.denominacion}
                   </Form.Control.Feedback>
                 </Form.Group>
+
                 <Modal.Footer className="mt-4">
                   <Button variant="secondary" onClick={onHide}>
                     Cancelar

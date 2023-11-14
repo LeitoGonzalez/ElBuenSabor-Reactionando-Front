@@ -8,6 +8,10 @@ import IngredienteModal from "../IngredienteModal/IngredienteModal";
 const IngredientesTable = () => {
   //Creamos una variable, contiene los datos recibidos de la BD.
   const [ingredientes, setIngredientes] = useState<DTOIngrediente[]>([]);
+
+  //Variable que va a actualizar los datos de la tabla luego de cada operacion
+  const [refreshData, setRefreshData] = useState(false);
+
   //Este hook se va a ejecutar cada vez que se renderice el componente o
   //Refresh data cambie de estado
   useEffect(() => {
@@ -17,7 +21,7 @@ const IngredientesTable = () => {
       setIngredientes(ingredientes);
     };
     fetchIngredientes();
-  }, []);
+  }, [refreshData]);
 
   console.log(JSON.stringify(ingredientes, null, 2));
 
@@ -28,12 +32,13 @@ const IngredientesTable = () => {
       id: 0,
       denominacion: "",
       fechaHoraAlta: new Date(),
-      fechaHoraBaja: new Date(),
-      fechaHoraModificacion: new Date(),
+      fechaHoraBaja: null,
+      fechaHoraModificacion: null,
       precioCompra: 0,
       stockActual: 0,
       stockMinimo: 0,
-      urlImagen: "",
+      urlImagen:
+        "https://www.tecnagent.com/wp-content/uploads/2017/11/imagen-no-disponible.png",
       unidadMedida: {
         id: 1,
         denominacion: "",
@@ -109,9 +114,16 @@ const IngredientesTable = () => {
                 <td>{ingrediente.precioCompra}</td>
                 <td>{ingrediente.stockActual}</td>
                 <td>{ingrediente.stockMinimo}</td>
-                <td>{ingrediente.urlImagen}</td>
+                <td>
+                  <img
+                    src={ingrediente.urlImagen}
+                    alt={ingrediente.denominacion}
+                    style={{ width: "100px" }}
+                  ></img>
+                </td>
                 <td>{ingrediente.unidadMedida.denominacion}</td>
                 <td>{ingrediente.rubroIngrediente.denominacion}</td>
+
                 <td>
                   <Button
                     variant="primary"
@@ -152,6 +164,7 @@ const IngredientesTable = () => {
           title={title}
           modalType={modalType}
           ingredient={ingrediente}
+          refreshData={setRefreshData}
         />
       )}
     </>
