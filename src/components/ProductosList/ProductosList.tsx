@@ -9,9 +9,13 @@ import { DTOProducto } from "../../types/DTOProducto";
 type ProductListProp={
   detalleProducto: TypeDetalleCarrito[];
   setDetalleProducto: React.Dispatch<React.SetStateAction<TypeDetalleCarrito[]>>;
+  total: number;
+	setTotal:React.Dispatch<React.SetStateAction<number>>;
+	countProducts: number;
+	setCountProducts: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ProductosList = ({detalleProducto,setDetalleProducto}:ProductListProp) => {
+const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countProducts,setCountProducts}:ProductListProp) => {
 
   //useState lista de productos
   const [productos, setProductos] = useState<DTOProducto[]>();
@@ -30,9 +34,22 @@ const ProductosList = ({detalleProducto,setDetalleProducto}:ProductListProp) => 
       urlImagen: producto.urlImagen,
       id: 0
     };
-    
+
+    if (detalleProducto.find(item => item.productoId === producto.id)) {
+			const products = detalleProducto.map(item =>
+				item.productoId === producto.id
+					? { ...item, cantidad: item.cantidad + 1 }
+					: item
+			);
+			setTotal(total + detalleProductoItem.precioVenta * detalleProductoItem.cantidad);
+			setCountProducts(countProducts + detalleProductoItem.cantidad);
+			return setDetalleProducto([...products]);
+		}
+
     const updatedProducts = [...detalleProducto, detalleProductoItem];
     setDetalleProducto(updatedProducts);
+    setCountProducts(countProducts+1);
+    setTotal(total+(detalleProductoItem.cantidad*producto.precioVenta))
   };
 
   //useEffect para obtener lista de productos
@@ -57,8 +74,7 @@ const ProductosList = ({detalleProducto,setDetalleProducto}:ProductListProp) => 
             <tr>
               <th>Denominacion</th>
               <th>Descripcion</th>
-              <th>Costo</th>
-              <th>Precio de venta</th>
+              <th>Precio</th>
               <th>Rubro</th>
               <th>Imagen</th>
               <th>Carrito</th>
