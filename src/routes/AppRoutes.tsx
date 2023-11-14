@@ -5,7 +5,7 @@ import Historial from "../pages/Historial";
 import Producto from "../pages/Producto";
 import { AboutUs } from "../pages/AboutUs";
 import ABMProducto from "../pages/ABMProducto";
-import ABMIngrediente from "../pages/ABMIngrediente";
+import MetodoPago from "../pages/MetodoPago";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -16,7 +16,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/aboutus" element={<AboutUs />} />
       <Route path="/contacto" element={<Contacto />} />
       <Route path="/abmproductos" element={<ABMProducto />} />
-      <Route path="/abmingredientes" element={<ABMIngrediente/>}/>
+      <Route path="/metodo_de_pago" element={<MetodoPago />} />
     </Routes>
   );
 };
