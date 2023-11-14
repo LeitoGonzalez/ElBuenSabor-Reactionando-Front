@@ -27,6 +27,12 @@ export const ProductoService = {
 
         return data;
     },    
+    getProducto: async (id:number): Promise<Producto<"COCINA"|"BEBIDA">> => {
+      const response = await fetch(`${BASE_URL}/${id}`);
+      const data = await response.json();
+
+      return data;
+  },
 
     updateProduct: async (dtoRequest : DTOProducto, id: number): Promise<Producto<"COCINA"|"BEBIDA">> => {
         

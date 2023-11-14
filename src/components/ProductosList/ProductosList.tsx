@@ -8,9 +8,13 @@ import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito";
 type ProductListProp={
   detalleProducto: TypeDetalleCarrito[];
   setDetalleProducto: React.Dispatch<React.SetStateAction<TypeDetalleCarrito[]>>;
+  total: number;
+	setTotal:React.Dispatch<React.SetStateAction<number>>;
+	countProducts: number;
+	setCountProducts: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ProductosList = ({detalleProducto,setDetalleProducto}:ProductListProp) => {
+const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countProducts,setCountProducts}:ProductListProp) => {
 
 
   //useState lista de productos
@@ -27,8 +31,22 @@ const ProductosList = ({detalleProducto,setDetalleProducto}:ProductListProp) => 
       descripcion: producto.descripcion,
       urlImagen: producto.urlImagen,
     };
+
+    if (detalleProducto.find(item => item.productoId === producto.id)) {
+			const products = detalleProducto.map(item =>
+				item.productoId === producto.id
+					? { ...item, cantidad: item.cantidad + 1 }
+					: item
+			);
+			setTotal(total + detalleProductoItem.precioVenta * detalleProductoItem.cantidad);
+			setCountProducts(countProducts + detalleProductoItem.cantidad);
+			return setDetalleProducto([...products]);
+		}
+
     const updatedProducts = [...detalleProducto, detalleProductoItem];
     setDetalleProducto(updatedProducts);
+    setCountProducts(countProducts+1);
+    setTotal(total+(detalleProductoItem.cantidad*producto.precioVenta))
   };
 
 
@@ -53,8 +71,7 @@ const ProductosList = ({detalleProducto,setDetalleProducto}:ProductListProp) => 
             <tr>
               <th>Denominacion</th>
               <th>Descripcion</th>
-              <th>Costo</th>
-              <th>Precio de venta</th>
+              <th>Precio</th>
               <th>Rubro</th>
               <th>Imagen</th>
               <th>Carrito</th>
@@ -66,7 +83,6 @@ const ProductosList = ({detalleProducto,setDetalleProducto}:ProductListProp) => 
               <tr key={producto.id}>
                 <td>{producto.denominacion}</td>
                 <td>{producto.descripcion}</td>
-                <td>{producto.costo}</td>
                 <td>{producto.precioVenta}</td>
                 <td>{producto.rubroProducto.denominacion}</td>
                 <td>

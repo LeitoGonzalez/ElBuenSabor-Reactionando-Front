@@ -7,9 +7,11 @@ function App() {
   return (
     <>
       <Router>
-         <Header />
-         <AppRoutes />
-         <Footer />
+        <Header />
+        <Container>
+          <AppRoutes />
+        </Container>
+        <Footer />
       </Router>
     </>
   );

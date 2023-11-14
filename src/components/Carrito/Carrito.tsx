@@ -24,10 +24,10 @@ const Carrito = () => {
       <ProductosList
        detalleProducto={detalleProducto}
       setDetalleProducto={setDetalleProducto} 
-      /*total={total}
+      total={total}
       setTotal={setTotal}
       countProducts={countProducts}
-      setCountProducts={setCountProducts} */
+      setCountProducts={setCountProducts} 
       />
 
       </div>

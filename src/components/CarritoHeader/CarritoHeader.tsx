@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { TypeDetalleCarrito } from '../../types/TypeDetalleCarrito';
+import PagoModal from '../PagoModal/PagoModal';
 
 
 type CarritoHeaderProps={
@@ -20,6 +21,7 @@ export const CarritoHeader = ({
 	setCountProducts,
 	setTotal
 }:CarritoHeaderProps) => {
+
 	const [active, setActive] = useState(false);
 
 	const onDeleteProduct = (product:TypeDetalleCarrito) => {
@@ -38,7 +40,37 @@ export const CarritoHeader = ({
 		setCountProducts(0);
 	};
 
+	const onConfirmar=()=>{
+		setShowModal(true);
+
+	}
+	const [showModal,setShowModal]=useState(false)
+
+	const handleAgregar=(product:TypeDetalleCarrito)=>{
+		const products = detalleProducto.map(item =>
+			item.productoId === product.productoId
+				? { ...item, cantidad: item.cantidad + 1 }
+				: item
+		);
+		setTotal(total + product.precioVenta);
+		setCountProducts(countProducts + 1);
+		setDetalleProducto(products);
+	}
+	const handleDisminuir=(product:TypeDetalleCarrito)=>{
+		const products = detalleProducto.map(item =>
+			item.productoId === product.productoId
+				?{ ...item, cantidad: item.cantidad - 1}
+				: item
+		
+		).filter((item) => item.cantidad > 0);
+		
+		setDetalleProducto(products);
+		setTotal(total - product.precioVenta);
+		setCountProducts(countProducts - 1);
+	}
+
 	return (
+		<>
 		<header>
 			<h1>Tienda</h1>
 
@@ -62,7 +94,7 @@ export const CarritoHeader = ({
 						/>
 					</svg>
 					<div className='count-products'>
-						<span id='contador-productos'>{countProducts}</span>
+						<span id='contador-productos'>{countProducts}</span> {/* Contador de Productos */}
 					</div>
 				</div>
 
@@ -78,7 +110,7 @@ export const CarritoHeader = ({
 									<div className='cart-product' key={product.productoId}>
 										<div className='info-cart-product'>
 											<span className='cantidad-producto-carrito'>
-												{product.cantidad}
+												{product.cantidad}{" "}
 											</span>
 											<p className='titulo-producto-carrito'>
 												{product.titulo}
@@ -87,6 +119,8 @@ export const CarritoHeader = ({
 												${product.precioVenta}
 											</span>
 										</div>
+										<button onClick={()=>handleAgregar(product)}>agregar</button>
+										<button onClick={()=>handleDisminuir(product)}>disminuir</button>
 										<svg
 											xmlns='http://www.w3.org/2000/svg'
 											fill='none'
@@ -114,6 +148,9 @@ export const CarritoHeader = ({
 							<button className='btn-clear-all' onClick={onCleanCart}>
 								Vaciar Carrito
 							</button>
+							<button className='btn-confirmar' onClick={onConfirmar}>
+								Confirmar Compra
+							</button>
 						</>
 					) : (
 						<p className='cart-empty'>El carrito está vacío</p>
@@ -121,5 +158,14 @@ export const CarritoHeader = ({
 				</div>
 			</div>
 		</header>
+			{showModal && (
+			<PagoModal
+			show={showModal}
+			onHide={() => setShowModal(false)}
+			detalleCarrito={detalleProducto}
+			total={total}
+			/>
+		)}
+		</>
 	);
 };
