@@ -1,4 +1,4 @@
-import { Ingrediente } from "../types/Ingrediente";
+import { DTOIngrediente } from "../types/DTOIngrediente";
 const BASE_URL = "http://localhost:8080/api/v1/ingrediente";
 
 //Contiene todos los metodos y funciones relacionados con la comunicacion de la Base de Datos
@@ -8,7 +8,7 @@ export const IngredieteService = {
   //Declaramos los metodos
 
   //Devuelve una lista de todos los ingredientes.
-  getIngredientesList: async (): Promise<Ingrediente[]> => {
+  getIngredientesList: async (): Promise<DTOIngrediente[]> => {
     const response = await fetch(`${BASE_URL}`);
     const data = await response.json();
 
@@ -16,7 +16,7 @@ export const IngredieteService = {
   },
 
   //Devuelve el ingrediente por su id.
-  getIngrediente: async (id: number): Promise<Ingrediente> => {
+  getIngrediente: async (id: number): Promise<DTOIngrediente> => {
     const response = await fetch(`${BASE_URL}/${id}`);
     const data = await response.json();
 
@@ -24,7 +24,9 @@ export const IngredieteService = {
   },
 
   //Crear un ingrediente.
-  createIngrediente: async (ingredient: Ingrediente): Promise<Ingrediente> => {
+  createIngrediente: async (
+    ingredient: DTOIngrediente
+  ): Promise<DTOIngrediente> => {
     const response = await fetch(`${BASE_URL}/add`, {
       method: "POST",
       headers: {
@@ -41,8 +43,8 @@ export const IngredieteService = {
   //Actualizar un ingrediente. Le paso el id de Ingrediente y me devuelve el Ingrediente actualizado.
   updateIngrediente: async (
     id: number,
-    ingredient: Ingrediente
-  ): Promise<Ingrediente> => {
+    ingredient: DTOIngrediente
+  ): Promise<DTOIngrediente> => {
     const response = await fetch(`${BASE_URL}/${id}`, {
       method: "PUT",
       headers: {
