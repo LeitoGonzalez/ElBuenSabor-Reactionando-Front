@@ -132,9 +132,9 @@ const IngredienteModal = ({
                 <FormGroup controlId="formDenominacion">
                   <FormLabel> Denominación </FormLabel>
                   <Form.Control
-                    name="denominación"
+                    name="denominacion"
                     type="text"
-                    value={formik.values.denominacion || ""}
+                    value={formik.values.denominacion}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     isInvalid={Boolean(
@@ -147,11 +147,11 @@ const IngredienteModal = ({
                 </FormGroup>
 
                 <FormGroup controlId="formPrecioCompra">
-                  <FormLabel> Precio de Compra</FormLabel>
+                  <FormLabel>Precio de Compra</FormLabel>
                   <Form.Control
                     name="precioCompra"
                     type="number"
-                    value={formik.values.precioCompra || ""}
+                    value={formik.values.precioCompra}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     isInvalid={Boolean(
@@ -166,8 +166,7 @@ const IngredienteModal = ({
                 <FormGroup controlId="formTipoUnidadMedida">
                   <FormLabel>Unidad de Medida</FormLabel>
                   <FormSelect
-                    name="tipoUnidadMedida"
-                    id="unidadMedida"
+                    name="unidadMedida.denominacion"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.unidadMedida.denominacion}
@@ -184,15 +183,14 @@ const IngredienteModal = ({
                 <FormGroup controlId="formrubroIngrediente">
                   <FormLabel>Rubro Ingrediente</FormLabel>
                   <FormSelect
-                    name="formrubroIngrediente"
-                    id="rubroIngrediente"
+                    name="rubroIngrediente.denominacion"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.rubroIngrediente.denominacion}
                   >
                     <option value="">Seleccionar</option>
-                    <option value="Gramo">Verdura</option>
-                    <option value="Unidad">Condimento</option>
+                    <option value="Verdura">Verdura</option>
+                    <option value="Condimento">Condimento</option>
                   </FormSelect>
                   <Form.Control.Feedback type="invalid">
                     {formik.errors.denominacion}
