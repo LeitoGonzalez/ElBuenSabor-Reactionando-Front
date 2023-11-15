@@ -6,25 +6,6 @@ import { ModalType } from "../../types/ModalType";
 import IngredienteModal from "../IngredienteModal/IngredienteModal";
 
 const IngredientesTable = () => {
-  //Creamos una variable, contiene los datos recibidos de la BD.
-  const [ingredientes, setIngredientes] = useState<DTOIngrediente[]>([]);
-
-  //Variable que va a actualizar los datos de la tabla luego de cada operacion
-  const [refreshData, setRefreshData] = useState(false);
-
-  //Este hook se va a ejecutar cada vez que se renderice el componente o
-  //Refresh data cambie de estado
-  useEffect(() => {
-    //Llamamos a la funcion para obtener todos los ingredientes declarados en el ingredienteService
-    const fetchIngredientes = async () => {
-      const ingredientes = await IngredieteService.getIngredientesList();
-      setIngredientes(ingredientes);
-    };
-    fetchIngredientes();
-  }, [refreshData]);
-
-  console.log(JSON.stringify(ingredientes, null, 2));
-
   //Inicializamos un ingrediente vacio
 
   const initializableNewIngredient = (): DTOIngrediente => {
@@ -55,10 +36,31 @@ const IngredientesTable = () => {
     initializableNewIngredient
   );
 
+  //Creamos una variable, contiene los datos recibidos de la BD.
+  const [ingredientes, setIngredientes] = useState<DTOIngrediente[]>();
+
+  //Variable que va a actualizar los datos de la tabla luego de cada operacion
+  const [refreshData, setRefreshData] = useState(false);
+
   //constante para manejar el estado del Modal
   const [showModal, setShowModal] = useState(false); //Setea si se muestra o no el modal
+
   const [modalType, setModalType] = useState<ModalType>(ModalType.NONE); //Setea qué tipo de modal será, cuál se va a mostrar
+
   const [title, setTitle] = useState(""); //Setea el título que va a tener el modal
+
+  //Este hook se va a ejecutar cada vez que se renderice el componente o
+  //Refresh data cambie de estado
+  useEffect(() => {
+    //Llamamos a la funcion para obtener todos los ingredientes declarados en el ingredienteService
+    const fetchIngredientes = async () => {
+      const ingredientes = await IngredieteService.getIngredientesList();
+      setIngredientes(ingredientes);
+    };
+    fetchIngredientes();
+  }, [refreshData]);
+
+  console.log(JSON.stringify(ingredientes, null, 2));
 
   //Lógica para elegir el modal y mostrarlo
   const handleClick = (
@@ -88,29 +90,31 @@ const IngredientesTable = () => {
         </Button>
       </Container>
       <Container className="mt-4">
-        <Table hover>
+        <Table>
           {/*Cabecera de la tabla */}
           <thead>
             <tr>
               <th>Denominacion</th>
-              <th>FechaHoraAlta</th>
+              {/*<th>FechaHoraAlta</th>
               <th>FechaHoraBaja</th>
-              <th>FechaHoraModificacion</th>
-              <th>Precio de Compra</th>
+        <th>FechaHoraModificacion</th>*/}
+              <th>Precio</th>
               <th>Stock Actual</th>
               <th>Stock Minimo</th>
               <th>Imagen</th>
-              <th>Unidad de Medida</th>
-              <th>Rubro de Ingrediente</th>
+              <th>Unidad</th>
+              <th>Rubro</th>
             </tr>
           </thead>
+
+          {/* Contenido con .map */}
           <tbody>
-            {ingredientes.map((ingrediente) => (
+            {ingredientes?.map((ingrediente) => (
               <tr key={ingrediente.id}>
                 <td>{ingrediente.denominacion}</td>
-                <td>{ingrediente.fechaHoraAlta}</td>
+                {/*<td>{ingrediente.fechaHoraAlta}</td>
                 <td>{ingrediente.fechaHoraBaja}</td>
-                <td>{ingrediente.fechaHoraModificacion}</td>
+            <td>{ingrediente.fechaHoraModificacion}</td>*/}
                 <td>{ingrediente.precioCompra}</td>
                 <td>{ingrediente.stockActual}</td>
                 <td>{ingrediente.stockMinimo}</td>
@@ -121,8 +125,8 @@ const IngredientesTable = () => {
                     style={{ width: "100px" }}
                   ></img>
                 </td>
-                <td>{ingrediente.unidadMedida.denominacion}</td>
-                <td>{ingrediente.rubroIngrediente.denominacion}</td>
+                <td>{ingrediente.unidadMedida?.denominacion}</td>
+                <td>{ingrediente.rubroIngrediente?.denominacion}</td>
 
                 <td>
                   <Button
@@ -138,6 +142,7 @@ const IngredientesTable = () => {
                     Editar
                   </Button>
                 </td>
+
                 <td>
                   <Button
                     variant="danger"
@@ -157,6 +162,7 @@ const IngredientesTable = () => {
           </tbody>
         </Table>
       </Container>
+
       {showModal && (
         <IngredienteModal
           show={showModal}
