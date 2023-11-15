@@ -24,9 +24,7 @@
     padding: 0px 96px;
     margin: 0px;
     background-color: lightblue;
-    position: fixed;
-    left: 0;
-    width: 100%;
+
 }
 .nav > .lupa{
     width: 350px;
