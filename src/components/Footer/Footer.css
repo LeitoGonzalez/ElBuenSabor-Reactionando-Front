@@ -2,6 +2,8 @@ footer{
     background-color: lightblue;
     position: absolute;
     bottom: 0;
+    left: 0;
+    width: 100%;
 }
 
 .footer{
@@ -10,7 +12,7 @@ footer{
     align-items: center;
     height: 96px;
     color: hsl(22, 94%, 7%);
-    font-size: 16px;   
+    font-size: 16px;  
 }
 .footer> .logonav{
     height: 64px;

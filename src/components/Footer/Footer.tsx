@@ -15,7 +15,7 @@ const Footer = () => {
   const navigate = useNavigate();
 
   return (
-    <footer className="mt-auto py-3 ">
+    <footer className="mt-auto py-3" >
       <div className="container footer">
         <div>
           <Nav.Link className="logonav" onClick={() => navigate("/")}>
