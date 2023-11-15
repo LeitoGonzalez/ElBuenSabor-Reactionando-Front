@@ -2,6 +2,8 @@ import { Button, Form, Nav } from "react-bootstrap";
 import { Cart, Search } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
+import { Login } from "../Login/Login";
+import { Register } from "../Register/Register";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -13,12 +15,9 @@ const Header = () => {
           <img src="src/assets/Logo.png" alt="logo" />
         </Nav.Link>
         <div className="botones">
-          <Button variant="primary" className="reg">
-            Iniciar Sesión
-          </Button>
-          <Button variant="primary" className="login">
-            Registrarse
-          </Button>
+
+          <Login/>
+          <Register/>
         </div>
       </div>
       <div className="nav">
@@ -36,7 +35,6 @@ const Header = () => {
         <Nav.Link onClick={() => navigate("/historial")}>Historial</Nav.Link>
         <Nav.Link onClick={() => navigate("/aboutus")}>Sobre Nosotros</Nav.Link>
         <Nav.Link onClick={() => navigate("/contacto")}>Contacto</Nav.Link>
-
         <Nav.Link onClick={() => navigate("/carrito")}>
           <Button>
             <Cart />

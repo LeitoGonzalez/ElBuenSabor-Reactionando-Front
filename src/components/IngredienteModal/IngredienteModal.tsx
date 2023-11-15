@@ -23,6 +23,7 @@ const IngredienteModal = ({
   ingredient,
 }: IngredientModalProps) => {
   //CREATE - ACTUALIZAR
+  
   const handleSaveUpdate = async (ingredient: DTOIngrediente) => {
     try {
       const isNew = ingredient.id === 0;
