@@ -4,15 +4,19 @@ import AppRoutes from "./routes/AppRoutes";
 import Footer from "./components/Footer/Footer";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Container } from "react-bootstrap";
 
 function App() {
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       <Router>
-         <Header />
-         <AppRoutes />
-         <Footer />
+        <Header />
+        <AppRoutes />
+        <Container
+          style={{ minHeight: "100vh", minWidth: "100%", padding: "0" }}
+        ></Container>
+        <Footer />
       </Router>
     </>
   );

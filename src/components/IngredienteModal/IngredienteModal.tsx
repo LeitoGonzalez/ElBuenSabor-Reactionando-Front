@@ -130,7 +130,7 @@ const IngredienteModal = ({
             <Modal.Body>
               <Form onSubmit={formik.handleSubmit}>
                 <FormGroup controlId="formDenominacion">
-                  <FormLabel> Descripción</FormLabel>
+                  <FormLabel> Denominación </FormLabel>
                   <Form.Control
                     name="denominación"
                     type="text"
