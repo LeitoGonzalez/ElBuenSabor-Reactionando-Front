@@ -3,6 +3,7 @@ import { Button, Form, Modal } from "react-bootstrap";
 import * as Yup from "yup";
 import { RegisterRequest } from "../../types/RegisterRequest";
 import { AuthService } from "../../services/AuthServices";
+import { useNavigate } from "react-router-dom";
 
 type ModalProps = {
   show: boolean;
@@ -22,12 +23,18 @@ const validationSchema = () => {
 };
 
 export const RegisterModal = ({ show, onHide, request }: ModalProps) => {
+
+  const navigate = useNavigate();
+
   //HANDLEREGISTER
   const handleRegister = async (request: RegisterRequest) => {
     try {
       await AuthService.register(request);
 
       onHide();
+      window.localStorage.setItem('isLoggedIn', 'true');
+      navigate('/');
+
       console.log("Registrado correctamente");
     } catch (error) {
       console.error(error);
