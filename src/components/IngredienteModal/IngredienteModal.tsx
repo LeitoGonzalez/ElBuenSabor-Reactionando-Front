@@ -1,4 +1,11 @@
-import { Button, Form, FormLabel, Modal } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  FormGroup,
+  FormLabel,
+  FormSelect,
+  Modal,
+} from "react-bootstrap";
 import { DTOIngrediente } from "../../types/DTOIngrediente";
 import { ModalType } from "../../types/ModalType";
 
@@ -7,12 +14,31 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { IngredieteService } from "../../services/IngredienteService";
 
+//Notificacion para el usuario
+import { toast } from "react-toastify";
+
 type IngredientModalProps = {
   show: boolean;
   onHide: () => void;
   title: string;
   modalType: ModalType;
   ingredient: DTOIngrediente;
+  refreshData: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+//Yup (esquema de validacion)
+const validationSchema = () => {
+  return Yup.object().shape({
+    id: Yup.number().integer().min(0),
+    denominacion: Yup.string().required(
+      "El nombre del ingrediente es requerido"
+    ),
+    precioCompra: Yup.number().min(0).required("El precio es obligatorio"),
+    tipoUnidadMedida: Yup.string().required("Elije una unidad de medida"),
+    rubroIngrediente: Yup.string().required(
+      "El rubro del Ingrediente es requerido"
+    ),
+  });
 };
 
 const IngredienteModal = ({
@@ -21,7 +47,18 @@ const IngredienteModal = ({
   title,
   modalType,
   ingredient,
+  refreshData,
 }: IngredientModalProps) => {
+  //Formik (utiliza el esquema de validacion para crear un formulario dinámico y que bloquee el formulario en caso de haber errores)
+
+  const formik = useFormik({
+    initialValues: ingredient,
+    validationSchema: validationSchema(),
+    validateOnBlur: true,
+    validateOnChange: true,
+    onSubmit: (obj: DTOIngrediente) => handleSaveUpdate(obj),
+  });
+
   //CREATE - ACTUALIZAR
   
   const handleSaveUpdate = async (ingredient: DTOIngrediente) => {
@@ -32,9 +69,14 @@ const IngredienteModal = ({
       } else {
         await IngredieteService.updateIngrediente(ingredient.id, ingredient);
       }
+      toast.success(isNew ? "Ingrediente creado" : "Ingrediente actualizado", {
+        position: "top-center",
+      });
       onHide();
+      refreshData((prevState) => !prevState);
     } catch (error) {
       console.error(error);
+      toast.error("Ha ocurrido un error");
     }
   };
 
@@ -42,159 +84,125 @@ const IngredienteModal = ({
   const handleDelete = async (ingredient: DTOIngrediente) => {
     try {
       await IngredieteService.deleteIngrediente(ingredient.id);
+      toast.success("Ingrediente eliminado con exito", {
+        position: "top-center",
+      });
       onHide();
+      refreshData((prevState) => !prevState);
     } catch (error) {
       console.error(error);
+      toast.error("Ha ocurrido un error");
     }
   };
-
-  //Yup (esquema de validacion)
-  const validationSchemaIngredient = () => {
-    return Yup.object().shape({
-      id: Yup.number().integer().min(0),
-      denominacion: Yup.string().required(
-        "El nombre del ingrediente es requerido"
-      ),
-      precioCompra: Yup.number().min(0).required("El precio es obligatorio"),
-      unidadMedida: Yup.string().required("La unidad de medida es requerido"),
-      rubroIngrediente: Yup.string().required(
-        "El rubro del Ingrediente es requerido"
-      ),
-    });
-  };
-
-  //Formik (utiliza el esquema de validacion para crear un formulario dinámico y que bloquee el formulario en caso de haber errores)
-
-  const formikIngrediente = useFormik({
-    initialValues: ingredient,
-    validationSchema: validationSchemaIngredient(),
-    validateOnBlur: true,
-    validateOnChange: true,
-    onSubmit: (obj: DTOIngrediente) => handleSaveUpdate(obj),
-  });
 
   return (
     <>
       {modalType === ModalType.DELETE ? (
-        <Modal show={show} onHide={onHide} centered backdrop="static">
-          <Modal.Header closeButton>
-            <Modal.Title>{title}</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <p>
-              ¿Desea eliminar el ingrediente{" "}
-              <strong>{ingredient.denominacion}</strong>?
-            </p>
-          </Modal.Body>
-
-          <Modal.Footer className="mt-4">
-            <Button variant="secondary" onClick={onHide}>
-              Cancelar
-            </Button>
-            <Button variant="danger" onClick={() => handleDelete(ingredient)}>
-              Eliminar
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      ) : (
         <>
-          <Modal
-            show={show}
-            onHide={onHide}
-            centered
-            backdrop="static"
-            className="modal-xl"
-          >
+          <Modal show={show} onHide={onHide} centered backdrop="static">
             <Modal.Header>
               <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
+
             <Modal.Body>
-              <Form onSubmit={formikIngrediente.handleSubmit}>
-                <Form.Group controlId="formDenominacion">
-                  <FormLabel> Descripción</FormLabel>
+              <p>
+                ¿Desea eliminar el ingrediente{" "}
+                <strong>{ingredient.denominacion}</strong>?
+              </p>
+            </Modal.Body>
+
+            <Modal.Footer>
+              <Button variant="secondary" onClick={onHide}>
+                Cancelar
+              </Button>
+              <Button variant="danger" onClick={() => handleDelete(ingredient)}>
+                Eliminar
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </>
+      ) : (
+        <>
+          <Modal show={show} onHide={onHide} centered backdrop="static">
+            <Modal.Header closeButton>
+              <Modal.Title>{title}</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              <Form onSubmit={formik.handleSubmit}>
+                <FormGroup controlId="formDenominacion">
+                  <FormLabel> Denominación </FormLabel>
                   <Form.Control
-                    name="denominación"
+                    name="denominacion"
                     type="text"
-                    value={formikIngrediente.values.denominacion || ""}
-                    onChange={formikIngrediente.handleChange}
-                    onBlur={formikIngrediente.handleBlur}
+                    value={formik.values.denominacion}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     isInvalid={Boolean(
-                      formikIngrediente.errors.denominacion &&
-                        formikIngrediente.touched.denominacion
+                      formik.errors.denominacion && formik.touched.denominacion
                     )}
                   />
                   <Form.Control.Feedback type="invalid">
-                    {formikIngrediente.errors.denominacion}
+                    {formik.errors.denominacion}
                   </Form.Control.Feedback>
-                </Form.Group>
+                </FormGroup>
 
-                <Form.Group controlId="formPrecioCompra">
-                  <FormLabel> Precio de Compra</FormLabel>
+                <FormGroup controlId="formPrecioCompra">
+                  <FormLabel>Precio de Compra</FormLabel>
                   <Form.Control
                     name="precioCompra"
                     type="number"
-                    value={formikIngrediente.values.precioCompra || ""}
-                    onChange={formikIngrediente.handleChange}
-                    onBlur={formikIngrediente.handleBlur}
+                    value={formik.values.precioCompra}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                     isInvalid={Boolean(
-                      formikIngrediente.errors.precioCompra &&
-                        formikIngrediente.touched.precioCompra
+                      formik.errors.precioCompra && formik.touched.precioCompra
                     )}
                   />
                   <Form.Control.Feedback type="invalid">
-                    {formikIngrediente.errors.precioCompra}
+                    {formik.errors.precioCompra}
                   </Form.Control.Feedback>
-                </Form.Group>
+                </FormGroup>
 
-                <Form.Group controlId="formunidadMedida">
-                  <FormLabel> Unidad de Medida</FormLabel>
-                  <Form.Control
-                    name="unidadMedida"
-                    type="text"
-                    value={
-                      formikIngrediente.values.unidadMedida.denominacion || ""
-                    }
-                    onChange={formikIngrediente.handleChange}
-                    onBlur={formikIngrediente.handleBlur}
-                    isInvalid={Boolean(
-                      formikIngrediente.errors.unidadMedida?.denominacion &&
-                        formikIngrediente.touched.unidadMedida?.denominacion
-                    )}
-                  />
+                <FormGroup controlId="formTipoUnidadMedida">
+                  <FormLabel>Unidad de Medida</FormLabel>
+                  <FormSelect
+                    name="unidadMedida.denominacion"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.unidadMedida.denominacion}
+                  >
+                    <option value="">Seleccionar</option>
+                    <option value="Gramo">Gramos</option>
+                    <option value="Unidad">Unidad</option>
+                  </FormSelect>
                   <Form.Control.Feedback type="invalid">
-                    {formikIngrediente.errors.unidadMedida?.denominacion}
+                    {formik.errors.denominacion}
                   </Form.Control.Feedback>
-                </Form.Group>
+                </FormGroup>
 
-                <Form.Group controlId="formrubroIngrediente">
-                  <FormLabel> Rubro de Ingrediente</FormLabel>
-                  <Form.Control
-                    name="rubroIngrediente"
-                    type="text"
-                    value={
-                      formikIngrediente.values.rubroIngrediente.denominacion ||
-                      ""
-                    }
-                    onChange={formikIngrediente.handleChange}
-                    onBlur={formikIngrediente.handleBlur}
-                    isInvalid={Boolean(
-                      formikIngrediente.errors.rubroIngrediente?.denominacion &&
-                        formikIngrediente.touched.rubroIngrediente?.denominacion
-                    )}
-                  />
+                <FormGroup controlId="formrubroIngrediente">
+                  <FormLabel>Rubro Ingrediente</FormLabel>
+                  <FormSelect
+                    name="rubroIngrediente.denominacion"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.rubroIngrediente.denominacion}
+                  >
+                    <option value="">Seleccionar</option>
+                    <option value="Verdura">Verdura</option>
+                    <option value="Condimento">Condimento</option>
+                  </FormSelect>
                   <Form.Control.Feedback type="invalid">
-                    {formikIngrediente.errors.rubroIngrediente?.denominacion}
+                    {formik.errors.denominacion}
                   </Form.Control.Feedback>
-                </Form.Group>
-                <Modal.Footer className="mt-4">
+                </FormGroup>
+
+                <Modal.Footer>
                   <Button variant="secondary" onClick={onHide}>
                     Cancelar
                   </Button>
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    disabled={!formikIngrediente.isValid}
-                  >
+                  <Button variant="primary" type="submit">
                     Agregar
                   </Button>
                 </Modal.Footer>

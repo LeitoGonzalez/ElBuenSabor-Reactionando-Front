@@ -21,9 +21,6 @@ export const Login: React.FC = () => {
     setShowModal(true);
   };
 
-  //Navegacion
-  const navigate = useNavigate();
-
   return (
     <div>
       <Button

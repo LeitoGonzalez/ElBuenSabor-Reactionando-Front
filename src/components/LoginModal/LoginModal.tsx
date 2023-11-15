@@ -3,7 +3,6 @@ import { LoginRequest } from "../../types/LoginRequest";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { AuthService } from "../../services/AuthServices";
-import { useNavigate } from "react-router-dom";
 
 type ModalProps = {
   show: boolean;
@@ -19,9 +18,6 @@ const validationSchema = () => {
 }
 
 export const LoginModal = ({ show, onHide, request }: ModalProps) => {
-
-  //NAVIGATE
-  const navigate = useNavigate();
 
   //HANDLELOGIN
   const handleLogin = async (request:LoginRequest) => {
