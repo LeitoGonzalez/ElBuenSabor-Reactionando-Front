@@ -29,10 +29,10 @@ export const RegisterModal = ({ show, onHide, request }: ModalProps) => {
   //HANDLEREGISTER
   const handleRegister = async (request: RegisterRequest) => {
     try {
-      await AuthService.register(request);
+      const response = await AuthService.register(request);
 
       onHide();
-      window.localStorage.setItem('isLoggedIn', 'true');
+      window.localStorage.setItem('token', response.token); //Seteo token en localStorage
       navigate('/');
 
       console.log("Registrado correctamente");

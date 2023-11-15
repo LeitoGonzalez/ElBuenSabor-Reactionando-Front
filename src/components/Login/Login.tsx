@@ -1,12 +1,21 @@
 import { useState } from "react";
-import { Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { LoginModal } from "../LoginModal/LoginModal";
 
 import { useNavigate } from "react-router-dom";
+import { LoginRequest } from "../../types/LoginRequest";
 
 export const Login: React.FC = () => {
+  const initRequest = (): LoginRequest => {
+    return {
+      email: "",
+      password: "",
+    };
+  };
 
   const [showModal, setShowModal] = useState(false);
+
+  const [request, setRequest] = useState<LoginRequest>(initRequest);
 
   const handleShowModal = () => {
     setShowModal(true);
@@ -14,12 +23,6 @@ export const Login: React.FC = () => {
 
   //Navegacion
   const navigate = useNavigate();
-
-  //Funcion al loguearse
-  const onLogIn = () => {
-    window.localStorage.setItem('isLoggedIn', 'true');
-    navigate('/');
-  }
 
   return (
     <div>
@@ -31,11 +34,13 @@ export const Login: React.FC = () => {
         Iniciar Sesión
       </Button>
 
-
       {showModal && (
-        <LoginModal show={showModal} onHide={() => setShowModal(false)} onLogIn={onLogIn} />
+        <LoginModal
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          request={request}
+        />
       )}
-
     </div>
   );
 };
