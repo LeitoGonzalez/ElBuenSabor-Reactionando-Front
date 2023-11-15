@@ -1,83 +1,141 @@
 import { useFormik } from "formik";
-import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { Register } from "../Register/Register";
+import * as Yup from "yup";
+import { RegisterRequest } from "../../types/RegisterRequest";
+import { AuthService } from "../../services/AuthServices";
 
 type ModalProps = {
   show: boolean;
   onHide: () => void;
+  request: RegisterRequest;
 };
 
-export const RegisterModal = ({ show, onHide }: ModalProps) => {
+//VALIDATIONSCHEMA
+const validationSchema = () => {
+  return Yup.object().shape({
+    email: Yup.string().required("Ingrese un correo electrónico"),
+    password: Yup.string().required("Ingrese una contraseña"),
+    nombre: Yup.string().required("Ingrese su nombre"),
+    apellido: Yup.string().required("Ingrese su apellido"),
+    telefono: Yup.string().required("Ingrese su numero de telefono"),
+  });
+};
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [telefono, setTelefono] = useState("");
-    const [nombre, setNombre] = useState("");
-    const [apellido, setApellido] = useState("");
+export const RegisterModal = ({ show, onHide, request }: ModalProps) => {
+  //HANDLEREGISTER
+  const handleRegister = async (request: RegisterRequest) => {
+    try {
+      await AuthService.register(request);
+
+      onHide();
+      console.log("Registrado correctamente");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  //FORMIK
+  const formik = useFormik({
+    initialValues: request,
+    validationSchema: validationSchema(),
+    validateOnBlur: true,
+    onSubmit: (obj: RegisterRequest) => handleRegister(obj),
+  });
 
   return (
     <div className="modal show">
-      <Modal show={show} onHide={onHide} centered backdrop="static" >
+      <Modal show={show} onHide={onHide} centered backdrop="static">
         <Modal.Header closeButton>
           <Modal.Title>Registrate</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form onSubmit={formik.handleSubmit}>
+            {/* Email */}
+            <Form.Group className="mb-3" controlId="formEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
+                name="email"
                 type="email"
-                placeholder="Ingrese un email"
-                onChange={(e) => setEmail(e.target.value)}
-                required
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
               />
+              <Form.Control.Feedback type="invalid">
+                {formik.errors.email}
+              </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            {/* Password */}
+            <Form.Group className="mb-3" controlId="formPassword">
               <Form.Label>Contraseña</Form.Label>
               <Form.Control
+                name="password"
                 type="password"
-                placeholder="Contraseña"
-                onChange={(e) => setPassword(e.target.value)}
-                required
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
               />
+              <Form.Control.Feedback type="invalid">
+                {formik.errors.password}
+              </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            {/* Telefono */}
+            <Form.Group className="mb-3" controlId="formTelefono">
               <Form.Label>Telefono</Form.Label>
               <Form.Control
-                type="String"
-                placeholder="Telefono"
-                onChange={(e) => setTelefono(e.target.value)}
-                required
+                name="telefono"
+                type="string"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.telefono}
               />
+              <Form.Control.Feedback type="invalid">
+                {formik.errors.telefono}
+              </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            {/* Nombre */}
+            <Form.Group className="mb-3" controlId="formNombre">
               <Form.Label>Nombre</Form.Label>
               <Form.Control
-                type="String"
-                placeholder="Indique su nombre"
-                onChange={(e) => setNombre(e.target.value)}
-                required
+                name="nombre"
+                type="string"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.nombre}
               />
+              <Form.Control.Feedback type="invalid">
+                {formik.errors.nombre}
+              </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+            {/* Apellido */}
+            <Form.Group className="mb-3" controlId="formApellido">
               <Form.Label>Apellido</Form.Label>
               <Form.Control
-                type="String"
-                placeholder="Indique su apellido"
-                onChange={(e) => setApellido(e.target.value)}
-                required
+                name="apellido"
+                type="string"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.apellido}
               />
+              <Form.Control.Feedback type="invalid">
+                {formik.errors.apellido}
+              </Form.Control.Feedback>
             </Form.Group>
 
-            <Button variant="primary" type="submit">
-              Registrarse
-            </Button>
+            <Modal.Footer>
+              {/* Botones */}
+              <Button variant="primary" type="submit">
+                Registrarse
+              </Button>
+
+              <Button variant="secondary" onClick={onHide}>
+                Cancelar
+              </Button>
+            </Modal.Footer>
           </Form>
         </Modal.Body>
       </Modal>

@@ -4,9 +4,10 @@ import { Button, Form, Modal } from "react-bootstrap";
 type ModalProps = {
   show: boolean;
   onHide: () => void;
+  onLogIn: () => void;
 };
 
-export const LoginModal = ({ show, onHide }: ModalProps) => {
+export const LoginModal = ({ show, onHide, onLogIn }: ModalProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -39,7 +40,7 @@ export const LoginModal = ({ show, onHide }: ModalProps) => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" onClick={onLogIn}>
               Ingresar
             </Button>
             <Form.Text className="text-muted" style={{padding:"20px"}}>
