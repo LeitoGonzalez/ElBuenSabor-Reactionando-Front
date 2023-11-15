@@ -19,10 +19,6 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
   //useState lista de productos
   const [productos, setProductos] = useState<DTOProducto[]>();
 
-
-  const handleClick = (producto: DTOProducto) => {
-
-
   const handleClick = (producto: DTOProducto) => {
 
     const detalleProductoItem : TypeDetalleCarrito ={
@@ -33,7 +29,6 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
       titulo: producto.denominacion,
       descripcion: producto.descripcion,
       urlImagen: producto.urlImagen,
-      id: 0
     };
 
     if (detalleProducto.find(item => item.productoId === producto.id)) {
@@ -108,4 +103,6 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
     </>
   );
 };
+
+
 export default ProductosList;

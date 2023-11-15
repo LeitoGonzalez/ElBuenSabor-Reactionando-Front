@@ -35,7 +35,6 @@ const validationSchema = () => {
     tiempoEstimadoCocina: Yup.number()
       .integer()
       .min(1)
-      .required("Ingresa el tiempo estimado de cocina"),
   });
 };
 
@@ -268,6 +267,7 @@ const ProductoModal = ({
                     Cancelar
                   </Button>
                   <Button
+                    onClick={() => formik.handleSubmit()}
                     variant="primary"
                     type="submit"
                     disabled={!formik.isValid}

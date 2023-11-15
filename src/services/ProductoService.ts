@@ -1,3 +1,4 @@
+import { DTOProducto } from "../types/DTOProducto";
 import { DTOProductoRequest } from "../types/DTOProductoRequest";
 import { Producto } from "../types/Producto";
 
@@ -6,7 +7,7 @@ const BASE_URL = "http://localhost:8080/api/v1/productos";
 export const ProductoService = {
     //Acá hacemos todas las consultas HTTP
 
-    getProductosList: async (): Promise<Producto<"COCINA"|"BEBIDA">[]> => {
+    getProductosList: async (): Promise<DTOProducto[]> => {
         const response = await fetch(`${BASE_URL}/list`);
         const data = await response.json();
 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { ProductoService } from "../../services/ProductoService";
-import { Producto } from "../../types/Producto";
 import { Button, Container, Table } from "react-bootstrap";
 import { DTOProductoRequest } from "../../types/DTOProductoRequest";
 import { ModalType } from "../../types/ModalType";
 import ProductoModal from "../ProductoModal/ProductoModal";
+import { DTOProducto } from "../../types/DTOProducto";
 
 const ProductosTable = () => {
   //Inicializar un producto vacío
@@ -16,7 +16,7 @@ const ProductosTable = () => {
       descripcion: "",
       precio: 0,
       costo: 0,
-      tiempoEstimadoCocina: 0,
+      tiempoEstimadoCocina: null,
       marca: null,
       lote: null,
       detalleProductoCocinaList: [{
@@ -38,7 +38,7 @@ const ProductosTable = () => {
   );
 
   //useState lista de productos
-  const [productos, setProductos] = useState<Producto<"COCINA" | "BEBIDA">[]>();
+  const [productos, setProductos] = useState<DTOProducto[]>();
 
   //Refrescar lista, esto lo usamos para el useEffect
   const [refreshData, setRefreshData] = useState(false);
@@ -109,8 +109,8 @@ const ProductosTable = () => {
                 <td>{producto.denominacion}</td>
                 <td>{producto.descripcion}</td>
                 <td>{producto.costo}</td>
-                <td>{producto.precioVenta}</td>
-                <td>{producto.rubroProducto.denominacion}</td>
+                <td>{producto.precio}</td>
+                <td>{producto.rubroProducto?.denominacion}</td>
                 <td>
                   <img
                     src={producto.urlImagen}
