@@ -4,9 +4,14 @@ import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import { Login } from "../Login/Login";
 import { Register } from "../Register/Register";
+import useIsLoggedIn from "../../hooks/useIsLoggedIn";
+import Logout from "../Logout/Logout";
+import { useState } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
+
+  const [isLogged, setIsLogged] = useState(useIsLoggedIn());
 
   return (
     <>
@@ -17,8 +22,16 @@ const Header = () => {
               <img src="src/assets/Logo.png" alt="logo" />
             </Nav.Link>
             <div className="botones">
-              <Login/>
-              <Register/>
+              {isLogged ? (
+                <>
+                  <Logout logout={() => setIsLogged(false)}/>
+                </>
+              ) : (
+                <>
+                  <Login />
+                  <Register />
+                </>
+              )}
             </div>
           </Container>
         </Navbar>

@@ -58,8 +58,6 @@ const ProductosTable = () => {
     fetchProductos();
   }, [refreshData]);
 
-  console.log(JSON.stringify(productos, null, 2));
-
   //Lógica para elegir el modal y mostrarlo
   const handleClick = (
     newTitle: string,

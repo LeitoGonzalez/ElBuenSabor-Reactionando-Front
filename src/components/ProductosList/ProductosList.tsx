@@ -106,6 +106,6 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
     </>
   );
 };
-
+ 
 export default ProductosList;
 

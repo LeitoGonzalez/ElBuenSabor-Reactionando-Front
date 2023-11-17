@@ -74,7 +74,7 @@ const ProductoModal = ({
 
   const handleDelete = async (producto: DTOProducto) => {
     try {
-      await ProductoService.deleteProduct(producto.id);
+      await ProductoService.deleteProduct(producto.id, window.localStorage.getItem('token'));
 
       onHide();
       refreshData((prevState) => !prevState);
