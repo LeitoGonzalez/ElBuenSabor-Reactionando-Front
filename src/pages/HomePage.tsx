@@ -1,5 +1,11 @@
+import Carrousel from "../components/Carrousel/Carrousel";
+import MainProducts from "../components/MainProducts/MainProducts";
+
 const HomePage = () => {
-  return <> </>;
+  return <>
+    <Carrousel />
+    <MainProducts />
+  </>;
 };
 
 export default HomePage;

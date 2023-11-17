@@ -1,5 +1,6 @@
 import { DTOIngrediente } from "../types/DTOIngrediente";
-const BASE_URL = "http://localhost:8080/api/v1/ingrediente";
+
+const BASE_URL = "http://localhost:8080/api/v1/ingredientes";
 
 //Contiene todos los metodos y funciones relacionados con la comunicacion de la Base de Datos
 
@@ -27,7 +28,7 @@ export const IngredieteService = {
   createIngrediente: async (
     ingredient: DTOIngrediente
   ): Promise<DTOIngrediente> => {
-    const response = await fetch(`${BASE_URL}/add`, {
+    const response = await fetch(`${BASE_URL}/newIngrediente`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
