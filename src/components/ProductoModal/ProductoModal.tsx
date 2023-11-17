@@ -32,6 +32,7 @@ const validationSchema = () => {
     precio: Yup.number().min(0).required("El precio es obligatorio"),
     costo: Yup.number().min(0).required("El costo es obligatorio"),
     tipoProducto: Yup.string().required("Elije un tipo de producto"),
+    urlImagen: Yup.string()
   });
 };
 
@@ -120,23 +121,6 @@ const ProductoModal = ({
               {" "}
               {/* Acá va el formulario entero */}
               <Form onSubmit={formik.handleSubmit}>
-                {/* <FormGroup controlId="formTipoProducto">
-                  <FormLabel>Tipo de producto</FormLabel>
-                  <Form.Control
-                    as="select"
-                    name="tipoProducto"
-                    value={tipoProducto}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    isInvalid={Boolean(
-                      formik.errors.tipoProducto && formik.touched.tipoProducto
-                    )}
-                  >
-                    <option value="">Selecciona...</option>
-                    <option value="Cocina">Cocina</option>
-                    <option value="Insumo">Insumo</option>
-                  </Form.Control>
-                </FormGroup> */}
 
                 <FormGroup controlId="formTipoProducto">
                   <FormLabel>Tipo de producto</FormLabel>
@@ -228,6 +212,23 @@ const ProductoModal = ({
                     </FormGroup>
                   </Col>
                 </Row>
+
+                <FormGroup controlId="formUrlImagen">
+                  <FormLabel>URL de Imagen</FormLabel>
+                  <Form.Control
+                    name="urlImagen"
+                    type="text"
+                    value={formik.values.urlImagen || ""}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isInvalid={Boolean(
+                      formik.errors.urlImagen && formik.touched.urlImagen
+                    )}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.urlImagen}
+                  </Form.Control.Feedback>
+                </FormGroup>
 
                 {formik.values.tipoProducto === "Insumo" ? (
                   <>
