@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react"
-import { Card, CardHeader, CardTitle, Col, Container, Row } from "react-bootstrap"
+import { Card, Col, Container, Row } from "react-bootstrap"
 import { DTOProducto } from "../../types/DTOProducto"
 import { ProductoService } from "../../services/ProductoService";
-import { CardImage } from "react-bootstrap-icons";
-
 const MainProducts = () => {
 
     const [productos, setProductos] = useState<DTOProducto[]>();
