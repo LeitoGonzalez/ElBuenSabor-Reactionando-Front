@@ -1,7 +1,7 @@
-export interface RubroIngrediente{
-    id: number;
-    denominacion: string;
-    fechaHoraAlta: string;
-    fechaHoraBaja: string;
-    fechaHoraModificacion: string;
+export interface RubroIngrediente {
+  id: number;
+  denominacion: string;
+  fechaHoraAlta: Date;
+  fechaHoraBaja: Date | null;
+  fechaHoraModificacion: Date | null;
 }

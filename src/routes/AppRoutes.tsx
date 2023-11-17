@@ -4,6 +4,11 @@ import Contacto from "../pages/Contacto";
 import Historial from "../pages/Historial";
 import { AboutUs } from "../pages/AboutUs";
 import ABMProducto from "../pages/ABMProducto";
+<<<<<<< HEAD
+=======
+import ABMIngrediente from "../pages/ABMIngrediente";
+import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
+>>>>>>> auxiliar
 
 const AppRoutes: React.FC = () => {
   return (
@@ -12,7 +17,12 @@ const AppRoutes: React.FC = () => {
       <Route path="/historial" element={<Historial />} />
       <Route path="/aboutus" element={<AboutUs />} />
       <Route path="/contacto" element={<Contacto />} />
+<<<<<<< HEAD
       <Route path="/abmproductos" element={<ABMProducto />} />
+=======
+      <Route path="/abmproductos" element={<PrivateRoute element={<ABMProducto/>}/>}/>
+      <Route path="/abmingredientes" element={<ABMIngrediente/>}/>
+>>>>>>> auxiliar
     </Routes>
   );
 };

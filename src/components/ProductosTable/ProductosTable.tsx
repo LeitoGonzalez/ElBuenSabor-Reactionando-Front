@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { ProductoService } from "../../services/ProductoService";
 import { Button, Container, Table } from "react-bootstrap";
-import { DTOProductoRequest } from "../../types/DTOProductoRequest";
 import { ModalType } from "../../types/ModalType";
 import ProductoModal from "../ProductoModal/ProductoModal";
 import { DTOProducto } from "../../types/DTOProducto";
 
 const ProductosTable = () => {
   //Inicializar un producto vacío
-  const initDTOProductoRequest = (): DTOProductoRequest => {
+  const initDTOProductoRequest = (): DTOProducto=> {
     return {
       id: 0,
       tipoProducto: "",
@@ -16,9 +15,9 @@ const ProductosTable = () => {
       descripcion: "",
       precio: 0,
       costo: 0,
-      tiempoEstimadoCocina: null,
-      marca: null,
-      lote: null,
+      tiempoEstimadoCocina: 0,
+      marca: "",
+      lote: 0,
       detalleProductoCocinaList: [{
         ingrediente: {
           id: 1
@@ -26,14 +25,15 @@ const ProductosTable = () => {
         cantidad: 5
       }],
       rubroProducto: {
-        id: 1
+        id: 1,
+        denominacion: ""
       },
       urlImagen: "https://www.tecnagent.com/wp-content/uploads/2017/11/imagen-no-disponible.png"
     };
   };
 
-  //useState de DTOProductoRequest
-  const [producto, setProducto] = useState<DTOProductoRequest>(
+  //useState de DTOProducto
+  const [producto, setProducto] = useState<DTOProducto>(
     initDTOProductoRequest
   );
 
@@ -51,7 +51,7 @@ const ProductosTable = () => {
   //useEffect para obtener lista de productos
   useEffect(() => {
     const fetchProductos = async () => {
-      const productoList = await ProductoService.getProductosList();
+      const productoList = await ProductoService.getProductosList(window.localStorage.getItem('token'));
       setProductos(productoList);
     };
 
@@ -63,12 +63,12 @@ const ProductosTable = () => {
   //Lógica para elegir el modal y mostrarlo
   const handleClick = (
     newTitle: string,
-    dtoProducto: DTOProductoRequest,
+    producto: DTOProducto,
     modal: ModalType
   ) => {
     setTitle(newTitle);
     setModalType(modal);
-    setProducto(dtoProducto);
+    setProducto(producto);
     setShowModal(true);
   };
 
@@ -99,7 +99,7 @@ const ProductosTable = () => {
               <th>Rubro</th>
               <th>Imagen</th>
               <th>Editar</th>
-              <th>Borrar</th>
+              <th>Baja</th>
             </tr>
           </thead>
           {/* Contenido con .map */}
@@ -119,10 +119,10 @@ const ProductosTable = () => {
                   ></img>
                 </td>
                 <td>
-                  <Button variant="primary">Editar</Button>
+                  <Button variant="primary" onClick={() => handleClick("Editar producto", producto, ModalType.UPDATE)}>Editar</Button>
                 </td>
                 <td>
-                  <Button variant="danger">Borrar</Button>
+                  <Button variant="danger" onClick={() => handleClick("Eliminar producto", producto, ModalType.DELETE)}>Dar de baja</Button>
                 </td>
               </tr>
             ))}

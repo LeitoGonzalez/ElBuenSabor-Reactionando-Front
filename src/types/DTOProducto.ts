@@ -1,4 +1,4 @@
-export interface DTOProducto{
+export interface DTOProducto {
     id: number;
     tipoProducto: string;
     denominacion: string;
@@ -19,7 +19,11 @@ export interface DTOProducto{
     
     rubroProducto: {
         id: number;
+<<<<<<< HEAD
         denominacion: string;
+=======
+        denominacion: string | null;
+>>>>>>> auxiliar
     } | null;
 
     urlImagen: string;

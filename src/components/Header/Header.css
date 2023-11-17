@@ -1,15 +1,15 @@
-.header{
+.header > .contenedor{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0px 96px;
+    padding: 0px 5%;
 
 }
 .logonav > img{
     height: 64px;
     margin: 0px;
 }
-.header > .botones{
+.botones{
     display: flex;
     justify-content: space-between;
     gap:8px;
@@ -17,24 +17,23 @@
 .botones > .reg {
     margin-right: 25px;
 }
-.nav{
+.navbar{
     display: flex;
     justify-content: space-around;
     align-items: center;
     height: 56px;
-    padding: 0px 96px;
+    padding: 0px;
     margin: 0px;
-    background-color: lightblue;
-    position: sticky;
 }
-.nav > .lupa{
+.lupa{
     width: 500px;
 }
-.nav > a{
+
+a{
     display: flex;
     justify-content: space-between;
     text-decoration: none;
     cursor: pointer;
-    color: #220D01;
+    color: hsl(22, 94%, 7%);
     font-size: 16px;
 }
