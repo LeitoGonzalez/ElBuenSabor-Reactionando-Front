@@ -10,7 +10,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="header">
+      <div className="border-bottom py-2">
         <Navbar expand="lg" className="contenedor">
           <Container>
             <Nav.Link className="logonav" onClick={() => navigate("/")}>
@@ -23,7 +23,7 @@ const Header = () => {
           </Container>
         </Navbar>
       </div>
-      <div className="navbar">
+      <div className="navbar" style={{backgroundColor: "#FFD13A"}}>
         <Navbar expand="lg">
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

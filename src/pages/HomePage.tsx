@@ -1,5 +1,9 @@
+import Carrousel from "../components/Carrousel/Carrousel";
+
 const HomePage = () => {
-  return <> </>;
+  return <>
+    <Carrousel />
+  </>;
 };
 
 export default HomePage;

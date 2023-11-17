@@ -28,7 +28,7 @@ export const IngredieteService = {
   createIngrediente: async (
     ingredient: DTOIngrediente
   ): Promise<DTOIngrediente> => {
-    const response = await fetch(`${BASE_URL}/add`, {
+    const response = await fetch(`${BASE_URL}/newIngrediente`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

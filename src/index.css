@@ -7,13 +7,6 @@
 	box-sizing: border-box;
 }
 
-body {
-	margin: 0 auto;
-	max-width: 1200px;
-	font-family: 'Lato';
-	color: #333;
-}
-
 .icon-cart {
 	width: 40px;
 	height: 40px;
@@ -199,7 +192,7 @@ header {
 .btn-clear-all {
 	border: none;
 	background-color: #000;
-	color: #fff;
+	color: #000000;
 	padding: 15px 0;
 	display: block;
 	width: 100%;
