@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { IngredieteService } from "../../services/IngredienteService";
+import { IngredieteService } from "../../../services/IngredienteService";
 import { Button, Container, Table } from "react-bootstrap";
-import { DTOIngrediente } from "../../types/DTOIngrediente";
-import { ModalType } from "../../types/ModalType";
+import { DTOIngrediente } from "../../../types/DTOIngrediente";
+import { ModalType } from "../../../types/ModalType";
 import IngredienteModal from "../IngredienteModal/IngredienteModal";
 
 const IngredientesTable = () => {

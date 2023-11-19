@@ -1,17 +1,25 @@
-import { Button, Container, Form, Nav, Navbar } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  Dropdown,
+  DropdownToggle,
+  Form,
+  Nav,
+  Navbar,
+} from "react-bootstrap";
 import { Search } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
-import { Login } from "../Login/Login";
-import { Register } from "../Register/Register";
-import useIsLoggedIn from "../../hooks/useIsLoggedIn";
-import Logout from "../Logout/Logout";
-import { useState } from "react";
+import { Login } from "../../LoginRegister/Login/Login";
+import { Register } from "../../LoginRegister/Register/Register";
+import Logout from "../../LoginRegister/Logout/Logout";
+import { useAuth } from "../../../context/AuthContext";
 
 const Header = () => {
   const navigate = useNavigate();
 
-  const [isLogged, setIsLogged] = useState(useIsLoggedIn());
+  //Authentication state
+  const { state } = useAuth();
 
   return (
     <>
@@ -21,10 +29,12 @@ const Header = () => {
             <Nav.Link className="logonav" onClick={() => navigate("/")}>
               <img src="src/assets/Logo.png" alt="logo" />
             </Nav.Link>
+
+            {/* BOTONES DE LOGIN */}
             <div className="botones">
-              {isLogged ? (
+              {state.isAuthenticated ? (
                 <>
-                  <Logout logout={() => setIsLogged(false)}/>
+                  <Logout />
                 </>
               ) : (
                 <>
@@ -32,11 +42,14 @@ const Header = () => {
                   <Register />
                 </>
               )}
+              <Button onClick={() => console.log(state)}>
+                Test de authContext
+              </Button>
             </div>
           </Container>
         </Navbar>
       </div>
-      <div className="navbar" style={{backgroundColor: "#FFD13A"}}>
+      <div className="navbar" style={{ backgroundColor: "#FFD13A" }}>
         <Navbar expand="lg">
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
@@ -65,6 +78,26 @@ const Header = () => {
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
+
+          {/* Herramientas */}
+          {(state.role === "ADMIN" || state.role == "EMPLEADO") && (
+            <>
+              <Dropdown>
+                <Dropdown.Toggle variant="success">
+                  Herramientas
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item onClick={() => navigate("/abmproductos")}>
+                    ABM Productos
+                  </Dropdown.Item>
+                  <Dropdown.Item href="#/action-2">
+                    ABM Ingredientes
+                  </Dropdown.Item>
+                  <Dropdown.Item href="#/action-3">ABM Otra cosa</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </>
+          )}
         </Navbar>
       </div>
     </>

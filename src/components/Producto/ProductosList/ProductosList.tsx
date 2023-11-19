@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { ProductoService } from "../../services/ProductoService";
-import { Producto } from "../../types/Producto";
+import { ProductoService } from "../../../services/ProductoService";
+import { Producto } from "../../../types/Producto";
 import { Button, Container, Table } from "react-bootstrap";
-import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito";
+import { TypeDetalleCarrito } from "../../../types/TypeDetalleCarrito";
 
-import { DTOProducto } from "../../types/DTOProducto";
+import { DTOProducto } from "../../../types/DTOProducto";
 
 
 /* import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito"; */

@@ -6,13 +6,13 @@ import {
   FormSelect,
   Modal,
 } from "react-bootstrap";
-import { DTOIngrediente } from "../../types/DTOIngrediente";
-import { ModalType } from "../../types/ModalType";
+import { DTOIngrediente } from "../../../types/DTOIngrediente";
+import { ModalType } from "../../../types/ModalType";
 
 //Dependencias para validar formularios
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { IngredieteService } from "../../services/IngredienteService";
+import { IngredieteService } from "../../../services/IngredienteService";
 
 //Notificacion para el usuario
 import { toast } from "react-toastify";

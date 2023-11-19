@@ -1,11 +1,11 @@
-import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito";
-import { FormaPago } from "../../types/Enums/FormaPago";
+import { TypeDetalleCarrito } from "../../../types/TypeDetalleCarrito";
+import { FormaPago } from "../../../types/Enums/FormaPago";
 import { useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
-import { TipoEnvio } from "../../types/Enums/TipoEnvio";
-import { Pedido } from "../../types/Pedido";
-import { EstadoPedido } from "../../types/Enums/EstadoPedido";
-import { PedidoService } from "../../services/PedidoService";
+import { TipoEnvio } from "../../../types/Enums/TipoEnvio";
+import { Pedido } from "../../../types/Pedido";
+import { EstadoPedido } from "../../../types/Enums/EstadoPedido";
+import { PedidoService } from "../../../services/PedidoService";
 
 type PagoModalProps = {
   show: boolean;

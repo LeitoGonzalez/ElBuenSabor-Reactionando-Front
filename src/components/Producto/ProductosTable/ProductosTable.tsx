@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { ProductoService } from "../../services/ProductoService";
+import { ProductoService } from "../../../services/ProductoService";
 import { Button, Container, Table } from "react-bootstrap";
-import { ModalType } from "../../types/ModalType";
+import { ModalType } from "../../../types/ModalType";
 import ProductoModal from "../ProductoModal/ProductoModal";
-import { DTOProducto } from "../../types/DTOProducto";
+import { DTOProducto } from "../../../types/DTOProducto";
 
 const ProductosTable = () => {
   //Inicializar un producto vacío

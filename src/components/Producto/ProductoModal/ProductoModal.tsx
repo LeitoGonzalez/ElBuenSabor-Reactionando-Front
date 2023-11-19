@@ -8,9 +8,9 @@ import {
   Modal,
   Row,
 } from "react-bootstrap";
-import { ModalType } from "../../types/ModalType";
-import { DTOProducto } from "../../types/DTOProducto";
-import { ProductoService } from "../../services/ProductoService";
+import { ModalType } from "../../../types/ModalType";
+import { DTOProducto } from "../../../types/DTOProducto";
+import { ProductoService } from "../../../services/ProductoService";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 

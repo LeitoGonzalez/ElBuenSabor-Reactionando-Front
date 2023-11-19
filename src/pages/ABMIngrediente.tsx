@@ -1,4 +1,4 @@
-import IngredientesTable from "../components/IngredientesTable/IngredientesTable";
+import IngredientesTable from "../components/Ingredientes/IngredientesTable/IngredientesTable";
 
 const ABMIngrediente = () => {
   return (
