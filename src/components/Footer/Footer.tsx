@@ -15,8 +15,10 @@ const Footer = () => {
   const navigate = useNavigate();
 
   return (
-    <footer>
-      <div className=" container footer">
+
+    <footer className="mt-auto py-3" >
+      <div className="container footer">
+
         <div>
           <Nav.Link className="logonav" onClick={() => navigate("/")}>
             <img src="src/assets/Logo.png" alt="logo" />

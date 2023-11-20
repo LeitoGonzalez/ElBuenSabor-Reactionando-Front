@@ -5,7 +5,8 @@ footer{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: auto;
+    left: 0;
+    width: 100%;
 }
 
 .footer{
@@ -16,6 +17,7 @@ footer{
     color: hsl(22, 94%, 7%);
     font-size: 16px;   
     padding: 0px 5%;
+
 }
 .footer> .logonav{
     height: 64px;

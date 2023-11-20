@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 import { LoginModal } from "../LoginModal/LoginModal";
 
+
 import { LoginRequest } from "../../types/LoginRequest";
 
 export const Login: React.FC = () => {
@@ -11,6 +12,19 @@ export const Login: React.FC = () => {
       password: "",
     };
   };
+
+
+import { LoginRequest } from "../../types/LoginRequest";
+
+
+export const Login: React.FC = () => {
+  const initRequest = (): LoginRequest => {
+    return {
+      email: "",
+      password: "",
+    };
+  };
+
 
   const [showModal, setShowModal] = useState(false);
 
