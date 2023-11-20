@@ -12,9 +12,9 @@ export const ProductoService = {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-          'Access-Control-Allow-Origin': '*'
-        }
+          Authorization: `Bearer ${token}`,
+          "Access-Control-Allow-Origin": "*",
+        },
       });
 
       const data = await response.json();
@@ -32,26 +32,28 @@ export const ProductoService = {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': '*'
-        }
+          "Access-Control-Allow-Origin": "*",
+        },
       });
 
       const data = await response.json();
 
       return data;
     } catch (error) {
-        console.error("Error de solicitud: ", error);
+      console.error("Error de solicitud: ", error);
       throw new Error();
     }
   },
 
   createProduct: async (
-    dtoRequest: DTOProducto
+    dtoRequest: DTOProducto, 
+    token: string | null
   ): Promise<Producto<"COCINA" | "BEBIDA">> => {
     const response = await fetch(`${BASE_URL}/admin/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(dtoRequest),
     });
@@ -60,6 +62,7 @@ export const ProductoService = {
 
     return data;
   },
+
   getProducto: async (id: number): Promise<Producto<"COCINA" | "BEBIDA">> => {
     const response = await fetch(`${BASE_URL}/${id}`);
     const data = await response.json();
@@ -69,29 +72,38 @@ export const ProductoService = {
 
   updateProduct: async (
     dtoRequest: DTOProducto,
-    id: number
+    id: number,
+    token: string | null
   ): Promise<Producto<"COCINA" | "BEBIDA">> => {
-    const response = await fetch(`${BASE_URL}/admin/update/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(dtoRequest),
-    });
+    try {
+      const response = await fetch(`${BASE_URL}/admin/update/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(dtoRequest),
+      });
 
-    const data = await response.json();
-
-    return data;
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw new Error();
+    }
   },
 
   deleteProduct: async (id: number, token: string | null): Promise<void> => {
-    await fetch(`${BASE_URL}/admin/delete/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-        'Access-Control-Allow-Origin': '*'
-      }
-    });
+    try {
+      await fetch(`${BASE_URL}/admin/delete/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
   },
 };

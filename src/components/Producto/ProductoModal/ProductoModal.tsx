@@ -58,12 +58,10 @@ const ProductoModal = ({
     try {
       const isNew = producto.id === 0;
       if (isNew) {
-        await ProductoService.createProduct(producto);
+        await ProductoService.createProduct(producto, window.localStorage.getItem('token'));
       } else {
-        await ProductoService.updateProduct(producto, producto.id);
+        await ProductoService.updateProduct(producto, producto.id, window.localStorage.getItem('token'));
       }
-
-      console.log("A");
 
       onHide(); //Una vez que se crea el producto, se esconde el Modal
       refreshData((prevState) => !prevState); //Se cambia refreshState para actualizar la lista del useEffect()
