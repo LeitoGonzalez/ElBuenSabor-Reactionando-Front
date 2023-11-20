@@ -77,6 +77,7 @@ const ProductosList = ({
 
   //muestra el boton de agregar solo si esta logeado
   const [token, setToken] = useState<string | null>(null);
+
   useEffect(() => {
     // Verifica si hay un token en el estado local al cargar el componente
     const storedToken = window.localStorage.getItem("token");
@@ -117,14 +118,14 @@ const ProductosList = ({
                   ></img>
                 </td>
                 <td>
-                  {token && (
+                  {token ? (
                     <Button
                       variant="primary"
                       onClick={() => handleClick(producto)}
                     >
                       Agregar a Carrito
                     </Button>
-                  )}
+                  ):("Inicia sesión para agregar al carrito")}
                 </td>
               </tr>
             ))}
