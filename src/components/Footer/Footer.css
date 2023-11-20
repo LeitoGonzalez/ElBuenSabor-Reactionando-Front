@@ -1,25 +1,30 @@
 footer{
     background-color: lightblue;
-    position: absolute;
+    position: relative;
     bottom: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     left: 0;
     width: 100%;
 }
 
 .footer{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    height: 96px;
+    height: 96px auto;
     color: hsl(22, 94%, 7%);
-    font-size: 16px;  
+    font-size: 16px;   
+    padding: 0px 5%;
+
 }
 .footer> .logonav{
     height: 64px;
 }
 .footer > .horario{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     gap: 64px;
 }
 .footer > .horario > .tarde > p{
@@ -29,11 +34,58 @@ footer{
     margin: 3px;
 }
 .footer > .ubicacion > p{
-    margin: 3px;
+    margin: 10px;
 }
 .footer > .redes{
     display: flex;
     flex-direction: row;
     font-size: 20px;
     gap: 10px;
+}
+@media(max-width: 1400px){
+    
+    .footer{
+        margin: 0;
+        padding: 0;
+       
+    }
+    .logonav > img{
+        height: 56px;
+        margin: 0px 30px;
+    }
+    .footer > .horario {
+        gap: 25px;
+        margin: 0px 30px;
+    }
+
+    .footer > .redes{
+        margin: 0px 30px;
+    }
+}
+@media(max-width:992px){
+
+    .footer{
+        display: flex;
+        flex-direction: column;
+    }
+    .logonav > img{
+        height: 56px;
+        margin:15px  0px ;
+    }
+    .footer > .horario{
+        flex-direction: column;
+        margin: 15px 0px;
+        gap: 25px;
+    }
+    .footer > .redes{
+        margin: 15px 0px ;
+    }
+    .footer{
+        align-items: center;
+        color: hsl(22, 94%, 7%);
+        font-size: 14px;   
+        padding: 0px 5%;
+    }
+   
+   
 }

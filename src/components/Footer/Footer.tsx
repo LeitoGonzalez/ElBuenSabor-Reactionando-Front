@@ -15,8 +15,10 @@ const Footer = () => {
   const navigate = useNavigate();
 
   return (
+
     <footer className="mt-auto py-3" >
       <div className="container footer">
+
         <div>
           <Nav.Link className="logonav" onClick={() => navigate("/")}>
             <img src="src/assets/Logo.png" alt="logo" />
@@ -43,7 +45,7 @@ const Footer = () => {
         <div className="ubicacion">
           <p>
             <GeoAlt />
-            Coronel Rodriguez 273, Ciudad Mendoza
+            Coronel Rodriguez 273, Mendoza
           </p>
           <p>
             <Envelope />

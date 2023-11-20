@@ -6,6 +6,7 @@ const BASE_URL = "http://localhost:8080/api/v1/productos";
 export const ProductoService = {
     //Acá hacemos todas las consultas HTTP
 
+
     getProductosList: async (): Promise<DTOProducto[]> => {
         const response = await fetch(`${BASE_URL}/list` ,{
           method: "GET",

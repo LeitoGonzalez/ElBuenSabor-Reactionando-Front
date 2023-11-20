@@ -31,7 +31,8 @@ const validationSchema = () => {
     descripcion: Yup.string().required("Debe poner una descripcion"),
     precio: Yup.number().min(0).required("El precio es obligatorio"),
     costo: Yup.number().min(0).required("El costo es obligatorio"),
-    tipoProducto: Yup.string().required("Elije un tipo de producto")
+    tipoProducto: Yup.string().required("Elije un tipo de producto"),
+    urlImagen: Yup.string()
   });
 };
 
@@ -43,7 +44,6 @@ const ProductoModal = ({
   producto,
   refreshData,
 }: ProductoModalProps) => {
-
   //Formulario
   const formik = useFormik({
     initialValues: producto,
@@ -73,15 +73,15 @@ const ProductoModal = ({
   };
 
   const handleDelete = async (producto: DTOProducto) => {
-    try{
+    try {
       await ProductoService.deleteProduct(producto.id);
 
       onHide();
       refreshData((prevState) => !prevState);
-    }catch (error){
+    } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return (
     <>
@@ -121,36 +121,19 @@ const ProductoModal = ({
               {" "}
               {/* Acá va el formulario entero */}
               <Form onSubmit={formik.handleSubmit}>
-                {/* <FormGroup controlId="formTipoProducto">
-                  <FormLabel>Tipo de producto</FormLabel>
-                  <Form.Control
-                    as="select"
-                    name="tipoProducto"
-                    value={tipoProducto}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    isInvalid={Boolean(
-                      formik.errors.tipoProducto && formik.touched.tipoProducto
-                    )}
-                  >
-                    <option value="">Selecciona...</option>
-                    <option value="Cocina">Cocina</option>
-                    <option value="Insumo">Insumo</option>
-                  </Form.Control>
-                </FormGroup> */}
 
                 <FormGroup controlId="formTipoProducto">
                   <FormLabel>Tipo de producto</FormLabel>
-                  <FormSelect 
-                    name="tipoProducto" 
-                    id="tipoProducto" 
+                  <FormSelect
+                    name="tipoProducto"
+                    id="tipoProducto"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.tipoProducto}
                   >
-                      <option value="">Seleccionar</option>
-                      <option value="Cocina">Cocina</option>
-                      <option value="Insumo">Insumo</option>
+                    <option value="">Seleccionar</option>
+                    <option value="Cocina">Cocina</option>
+                    <option value="Insumo">Insumo</option>
                   </FormSelect>
                   <Form.Control.Feedback type="invalid">
                     {formik.errors.denominacion}
@@ -230,6 +213,23 @@ const ProductoModal = ({
                   </Col>
                 </Row>
 
+                <FormGroup controlId="formUrlImagen">
+                  <FormLabel>URL de Imagen</FormLabel>
+                  <Form.Control
+                    name="urlImagen"
+                    type="text"
+                    value={formik.values.urlImagen || ""}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    isInvalid={Boolean(
+                      formik.errors.urlImagen && formik.touched.urlImagen
+                    )}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {formik.errors.urlImagen}
+                  </Form.Control.Feedback>
+                </FormGroup>
+
                 {formik.values.tipoProducto === "Insumo" ? (
                   <>
                     <FormGroup controlId="marca">
@@ -277,7 +277,8 @@ const ProductoModal = ({
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         isInvalid={Boolean(
-                          formik.errors.tiempoEstimadoCocina && formik.touched.tiempoEstimadoCocina
+                          formik.errors.tiempoEstimadoCocina &&
+                            formik.touched.tiempoEstimadoCocina
                         )}
                       />
                       <Form.Control.Feedback type="invalid">
@@ -292,10 +293,7 @@ const ProductoModal = ({
                   <Button variant="secondary" onClick={onHide}>
                     Cancelar
                   </Button>
-                  <Button
-                    variant="primary"
-                    type="submit"
-                  >
+                  <Button variant="primary" type="submit">
                     {" "}
                     {/* submit */}
                     Agregar

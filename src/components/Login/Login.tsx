@@ -1,9 +1,18 @@
 import { useState } from "react";
-import { Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { LoginModal } from "../LoginModal/LoginModal";
 
 
-export const Login = () => {
+import { LoginRequest } from "../../types/LoginRequest";
+
+export const Login: React.FC = () => {
+  const initRequest = (): LoginRequest => {
+    return {
+      email: "",
+      password: "",
+    };
+  };
+
 
 import { LoginRequest } from "../../types/LoginRequest";
 
@@ -19,6 +28,8 @@ export const Login: React.FC = () => {
 
   const [showModal, setShowModal] = useState(false);
 
+  const [request, setRequest] = useState<LoginRequest>(initRequest);
+
   const handleShowModal = () => {
     setShowModal(true);
   };
@@ -33,9 +44,12 @@ export const Login: React.FC = () => {
         Iniciar Sesión
       </Button>
 
-
       {showModal && (
-        <LoginModal show={showModal} onHide={() => setShowModal(false)} />
+        <LoginModal
+          show={showModal}
+          onHide={() => setShowModal(false)}
+          request={request}
+        />
       )}
     </div>
   );
