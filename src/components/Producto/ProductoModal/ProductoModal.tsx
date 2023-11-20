@@ -88,7 +88,7 @@ const ProductoModal = ({
       {modalType === ModalType.DELETE ? (
         /* Modal para un DELETE */
         <>
-          <Modal show={show} onHide={onHide} cenntered backdrop="static">
+          <Modal show={show} onHide={onHide} centered backdrop="static">
             <Modal.Header>
               <Modal.Title>{title}</Modal.Title>
             </Modal.Header>
