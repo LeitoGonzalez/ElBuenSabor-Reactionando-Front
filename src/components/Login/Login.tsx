@@ -14,18 +14,6 @@ export const Login: React.FC = () => {
   };
 
 
-import { LoginRequest } from "../../types/LoginRequest";
-
-
-export const Login: React.FC = () => {
-  const initRequest = (): LoginRequest => {
-    return {
-      email: "",
-      password: "",
-    };
-  };
-
-
   const [showModal, setShowModal] = useState(false);
 
   const [request, setRequest] = useState<LoginRequest>(initRequest);
