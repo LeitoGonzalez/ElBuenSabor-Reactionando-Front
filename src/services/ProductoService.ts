@@ -7,7 +7,12 @@ export const ProductoService = {
     //Acá hacemos todas las consultas HTTP
 
     getProductosList: async (): Promise<DTOProducto[]> => {
-        const response = await fetch(`${BASE_URL}/list`);
+        const response = await fetch(`${BASE_URL}/list` ,{
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          }
+        });
         const data = await response.json();
 
         return data;

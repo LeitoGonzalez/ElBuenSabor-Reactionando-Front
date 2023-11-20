@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { ProductoService } from "../../services/ProductoService";
-import { Producto } from "../../types/Producto";
 import { Button, Container, Table } from "react-bootstrap";
 import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito";
 
@@ -8,23 +7,30 @@ import { DTOProducto } from "../../types/DTOProducto";
 
 
 /* import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito"; */
-type ProductListProp={
+type ProductListProp = {
   detalleProducto: TypeDetalleCarrito[];
-  setDetalleProducto: React.Dispatch<React.SetStateAction<TypeDetalleCarrito[]>>;
+  setDetalleProducto: React.Dispatch<
+    React.SetStateAction<TypeDetalleCarrito[]>
+  >;
   total: number;
-	setTotal:React.Dispatch<React.SetStateAction<number>>;
-	countProducts: number;
-	setCountProducts: React.Dispatch<React.SetStateAction<number>>;
-}
+  setTotal: React.Dispatch<React.SetStateAction<number>>;
+  countProducts: number;
+  setCountProducts: React.Dispatch<React.SetStateAction<number>>;
+};
 
-const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countProducts,setCountProducts}:ProductListProp) => {
-
+const ProductosList = ({
+  detalleProducto,
+  setDetalleProducto,
+  total,
+  setTotal,
+  countProducts,
+  setCountProducts,
+}: ProductListProp) => {
   //useState lista de productos
   const [productos, setProductos] = useState<Producto<"COCINA" | "BEBIDA">[]>();
 
 
   const handleClick = (producto: DTOProducto) => {
-
 
     const detalleProductoItem : TypeDetalleCarrito ={
       cantidad: 1,
@@ -36,16 +42,18 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
       urlImagen: producto.urlImagen,
     };
 
-    if (detalleProducto.find(item => item.productoId === producto.id)) {
-			const products = detalleProducto.map(item =>
-				item.productoId === producto.id
-					? { ...item, cantidad: item.cantidad + 1 }
-					: item
-			);
-			setTotal(total + detalleProductoItem.precioVenta * detalleProductoItem.cantidad);
-			setCountProducts(countProducts + detalleProductoItem.cantidad);
-			return setDetalleProducto([...products]);
-		}
+    if (detalleProducto.find((item) => item.productoId === producto.id)) {
+      const products = detalleProducto.map((item) =>
+        item.productoId === producto.id
+          ? { ...item, cantidad: item.cantidad + 1 }
+          : item
+      );
+      setTotal(
+        total + detalleProductoItem.precioVenta * detalleProductoItem.cantidad
+      );
+      setCountProducts(countProducts + detalleProductoItem.cantidad);
+      return setDetalleProducto([...products]);
+    }
 
     const updatedProducts = [...detalleProducto, detalleProductoItem];
     setDetalleProducto(updatedProducts);
@@ -65,6 +73,20 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
   }, []);
 
   console.log(JSON.stringify(productos, null, 2));
+
+
+
+
+  //muestra el boton de agregar solo si esta logeado
+  const [token, setToken] = useState<string | null>(null);
+  useEffect(() => {
+    // Verifica si hay un token en el estado local al cargar el componente
+    const storedToken = window.localStorage.getItem("token");
+    if (storedToken) {
+      setToken(storedToken);
+    }
+  }, []);
+
 
   return (
     <>
@@ -97,14 +119,20 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
                   ></img>
                 </td>
                 <td>
-                  <Button variant="primary"  onClick={() => handleClick(producto)} >Agregar a Carrito</Button>
+                  {token && (
+                    <Button
+                      variant="primary"
+                      onClick={() => handleClick(producto)}
+                    >
+                      Agregar a Carrito
+                    </Button>
+                  )}
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
       </Container>
-
     </>
   );
 };
