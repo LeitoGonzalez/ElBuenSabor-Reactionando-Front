@@ -7,6 +7,7 @@ import { AboutUs } from "../pages/AboutUs";
 import ABMProducto from "../pages/ABMProducto";
 import ABMIngrediente from "../pages/ABMIngrediente";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
+import MPedidos from "../pages/MPedidos";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -15,9 +16,10 @@ const AppRoutes: React.FC = () => {
       <Route path="/producto" element={<Producto />} />
       <Route path="/historial" element={<Historial />} />
       <Route path="/aboutus" element={<AboutUs />} />
-      <Route path="/contacto" element={<Contacto />} />
       <Route path="/abmproductos" element={<PrivateRoute element={<ABMProducto/>}/>}/>
+      <Route path="/contacto" element={<Contacto />} />
       <Route path="/abmingredientes" element={<ABMIngrediente/>}/>
+      <Route path="/abmpedidos" element={<PrivateRoute element={<MPedidos/>}/>}/>
     </Routes>
   );
 };
