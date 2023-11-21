@@ -42,11 +42,11 @@ export const IngredieteService = {
     ingredient: DTOIngrediente, 
     token: string | null
   ): Promise<DTOIngrediente> => {
-    const response = await fetch(`${BASE_URL}/newIngrediente`, {
+    const response = await fetch(`${BASE_URL}/admin/newIngrediente`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(ingredient),
     });
@@ -63,7 +63,7 @@ export const IngredieteService = {
     token: string | null
   ): Promise<DTOIngrediente> => {
     try {
-      const response = await fetch(`${BASE_URL}/updateIngrediente/${id}`, {
+      const response = await fetch(`${BASE_URL}/admin/updateIngrediente/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
