@@ -1,4 +1,4 @@
-import PedidosList from "../components/PeidosList/PedidosList"
+import PedidosList from "../components/PedidosList/PedidosList"
 
 
 const MPedidos = () => {

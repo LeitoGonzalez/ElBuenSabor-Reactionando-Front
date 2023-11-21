@@ -4,36 +4,6 @@ import { Producto } from "../types/Producto";
 const BASE_URL = "http://localhost:8080/api/v1/productos";
 
 export const ProductoService = {
-  //Acá hacemos todas las consultas HTTP
-
-
-
-    createProduct: async (dtoRequest : DTOProducto): Promise<Producto<"COCINA"|"BEBIDA">> => {
-        
-        const response = await fetch(`${BASE_URL}/add`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(dtoRequest),
-        });
-
-        const data = await response.json();
-
-        return data;
-    },    
-    getProducto: async (id:number): Promise<Producto<"COCINA"|"BEBIDA">> => {
-      const response = await fetch(`${BASE_URL}/${id}`);
-      const data = await response.json();
-
-      return data;
-  },
-
-    updateProduct: async (dtoRequest : DTOProducto, id: number): Promise<Producto<"COCINA"|"BEBIDA">> => {
-        
-      const response = await fetch(`${BASE_URL}/update/${id}`, {
-        method: "PUT",
-
   getProductosList: async (token: string | null): Promise<DTOProducto[]> => {
     try {
       const response = await fetch(`${BASE_URL}/list`, {
@@ -135,3 +105,4 @@ export const ProductoService = {
     }
   },
 };
+

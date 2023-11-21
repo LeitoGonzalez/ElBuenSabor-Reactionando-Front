@@ -8,27 +8,20 @@ import { DTOProducto } from "../../../types/DTOProducto";
 
 
 /* import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito"; */
-type ProductListProp = {
+type ProductListProp={
   detalleProducto: TypeDetalleCarrito[];
-  setDetalleProducto: React.Dispatch<
-    React.SetStateAction<TypeDetalleCarrito[]>
-  >;
+  setDetalleProducto: React.Dispatch<React.SetStateAction<TypeDetalleCarrito[]>>;
   total: number;
-  setTotal: React.Dispatch<React.SetStateAction<number>>;
-  countProducts: number;
-  setCountProducts: React.Dispatch<React.SetStateAction<number>>;
-};
+	setTotal:React.Dispatch<React.SetStateAction<number>>;
+	countProducts: number;
+	setCountProducts: React.Dispatch<React.SetStateAction<number>>;
+}
 
-const ProductosList = ({
-  detalleProducto,
-  setDetalleProducto,
-  total,
-  setTotal,
-  countProducts,
-  setCountProducts,
-}: ProductListProp) => {
+const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countProducts,setCountProducts}:ProductListProp) => {
+
   //useState lista de productos
   const [productos, setProductos] = useState<Producto<"COCINA" | "BEBIDA">[]>();
+
 
   const handleClick = (producto: DTOProducto) => {
     const detalleProductoItem : TypeDetalleCarrito ={
@@ -41,31 +34,28 @@ const ProductosList = ({
       urlImagen: producto.urlImagen,
     };
 
-    if (detalleProducto.find((item) => item.productoId === producto.id)) {
-      const products = detalleProducto.map((item) =>
-        item.productoId === producto.id
-          ? { ...item, cantidad: item.cantidad + 1 }
-          : item
-      );
-      setTotal(
-        total + detalleProductoItem.precioVenta * detalleProductoItem.cantidad
-      );
-      setCountProducts(countProducts + detalleProductoItem.cantidad);
-      return setDetalleProducto([...products]);
-    }
+    if (detalleProducto.find(item => item.productoId === producto.id)) {
+			const products = detalleProducto.map(item =>
+				item.productoId === producto.id
+					? { ...item, cantidad: item.cantidad + 1 }
+					: item
+			);
+			setTotal(total + detalleProductoItem.precioVenta * detalleProductoItem.cantidad);
+			setCountProducts(countProducts + detalleProductoItem.cantidad);
+			return setDetalleProducto([...products]);
+		}
 
     const updatedProducts = [...detalleProducto, detalleProductoItem];
     setDetalleProducto(updatedProducts);
-    setCountProducts(countProducts + 1);
-    setTotal(total + detalleProductoItem.cantidad * producto.precio);
-
+    setCountProducts(countProducts+1);
+    setTotal(total+(detalleProductoItem.cantidad*producto.precioVenta))
   };
 
   //useEffect para obtener lista de productos
 
   useEffect(() => {
     const fetchProductos = async () => {
-      const productoList = await ProductoService.getProductosList();
+      const productoList = await ProductoService.getPublicProductosList();
       setProductos(productoList);
     };
 
@@ -73,10 +63,6 @@ const ProductosList = ({
   }, []);
 
   console.log(JSON.stringify(productos, null, 2));
-
-
-  const isLoggedIn = useIsLoggedIn();
-
 
   return (
     <>
@@ -109,25 +95,16 @@ const ProductosList = ({
                   ></img>
                 </td>
                 <td>
-                  {isLoggedIn ? (
-                    <Button
-                      variant="primary"
-                      onClick={() => handleClick(producto)}
-                    >
-                      Agregar a Carrito
-                    </Button>
-                  ) : (
-                    "Inicia sesión para agregar al carrito"
-                  )}
+                  <Button variant="primary"  onClick={() => handleClick(producto)} >Agregar a Carrito</Button>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
       </Container>
+
     </>
   );
 };
  
 export default ProductosList;
-
