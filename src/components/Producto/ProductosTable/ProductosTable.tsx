@@ -51,7 +51,7 @@ const ProductosTable = () => {
   //useEffect para obtener lista de productos
   useEffect(() => {
     const fetchProductos = async () => {
-      const productoList = await ProductoService.getProductosList();
+      const productoList = await ProductoService.getProductosList(window.localStorage.getItem('token'));
       setProductos(productoList);
     };
 

@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { ProductoService } from "../../../services/ProductoService";
-import { Producto } from "../../../types/Producto";
 import { Button, Container, Table } from "react-bootstrap";
 import { TypeDetalleCarrito } from "../../../types/TypeDetalleCarrito";
-
 import { DTOProducto } from "../../../types/DTOProducto";
-
+import { ProductoService } from "../../../services/ProductoService";
+import useIsLoggedIn from "../../../hooks/useIsLoggedIn";
+import { useAuth } from "../../../context/AuthContext";
 
 /* import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito"; */
 type ProductListProp={
@@ -20,14 +19,15 @@ type ProductListProp={
 const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countProducts,setCountProducts}:ProductListProp) => {
 
   //useState lista de productos
-  const [productos, setProductos] = useState<Producto<"COCINA" | "BEBIDA">[]>();
+  const [productos, setProductos] = useState<DTOProducto[]>();
 
 
   const handleClick = (producto: DTOProducto) => {
+
     const detalleProductoItem : TypeDetalleCarrito ={
       cantidad: 1,
-      precioVenta: producto.precioVenta,
-      subTotal: producto.precioVenta,
+      precioVenta: producto.precio,
+      subTotal: producto.precio,
       productoId: producto.id,
       titulo: producto.denominacion,
       descripcion: producto.descripcion,
@@ -48,7 +48,7 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
     const updatedProducts = [...detalleProducto, detalleProductoItem];
     setDetalleProducto(updatedProducts);
     setCountProducts(countProducts+1);
-    setTotal(total+(detalleProductoItem.cantidad*producto.precioVenta))
+    setTotal(total+(detalleProductoItem.cantidad*producto.precio))
   };
 
   //useEffect para obtener lista de productos
@@ -63,6 +63,8 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
   }, []);
 
   console.log(JSON.stringify(productos, null, 2));
+
+  const { state } = useAuth();
 
   return (
     <>
@@ -85,8 +87,8 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
               <tr key={producto.id}>
                 <td>{producto.denominacion}</td>
                 <td>{producto.descripcion}</td>
-                <td>{producto.precioVenta}</td>
-                <td>{producto.rubroProducto.denominacion}</td>
+                <td>{producto.precio}</td>
+                <td>{producto.rubroProducto?.denominacion}</td>
                 <td>
                   <img
                     src={producto.urlImagen}
@@ -95,8 +97,8 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
                   ></img>
                 </td>
                 <td>
-                  <Button variant="primary"  onClick={() => handleClick(producto)} >Agregar a Carrito</Button>
-                </td>
+                  {state.isAuthenticated ?(<Button variant="primary"  onClick={() => handleClick(producto)} >Agregar a Carrito</Button>
+                ):("Inicia sesión para agregar al carrito")}</td>
               </tr>
             ))}
           </tbody>
@@ -106,5 +108,4 @@ const ProductosList = ({detalleProducto,setDetalleProducto,total,setTotal,countP
     </>
   );
 };
- 
 export default ProductosList;
