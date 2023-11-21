@@ -58,8 +58,8 @@ export const IngredieteService = {
 
   //Actualizar un ingrediente. Le paso el id de Ingrediente y me devuelve el Ingrediente actualizado.
   updateIngrediente: async (
-    id: number,
     ingredient: DTOIngrediente,
+    id: number,
     token: string | null
   ): Promise<DTOIngrediente> => {
     try {

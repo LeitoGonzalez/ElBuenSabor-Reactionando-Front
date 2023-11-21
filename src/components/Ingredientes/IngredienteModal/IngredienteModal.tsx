@@ -67,7 +67,7 @@ const IngredienteModal = ({
       if (isNew) {
         await IngredieteService.createIngrediente(ingredient, window.localStorage.getItem('token'));
       } else {
-        await IngredieteService.updateIngrediente(ingredient.id, ingredient, window.localStorage.getItem('token'));
+        await IngredieteService.updateIngrediente(ingredient,ingredient.id, window.localStorage.getItem('token'));
       }
       toast.success(isNew ? "Ingrediente creado" : "Ingrediente actualizado", {
         position: "top-center",
@@ -113,6 +113,8 @@ const IngredienteModal = ({
                 Cancelar
               </Button>
               <Button variant="danger" onClick={() => handleDelete(ingredient)}>
+                {" "}
+                {/* handleDelete */}
                 Eliminar
               </Button>
             </Modal.Footer>
@@ -126,6 +128,8 @@ const IngredienteModal = ({
             </Modal.Header>
 
             <Modal.Body>
+              {" "}
+              {/* Acá va el formulario entero */}
               <Form onSubmit={formik.handleSubmit}>
                 <FormGroup controlId="formDenominacion">
                   <FormLabel> Denominación </FormLabel>
@@ -199,7 +203,9 @@ const IngredienteModal = ({
                   <Button variant="secondary" onClick={onHide}>
                     Cancelar
                   </Button>
-                  <Button variant="primary" type="submit">
+                  <Button variant="primary" type="submit" >
+                    {" "}
+                    {/* submit */}
                     Agregar
                   </Button>
                 </Modal.Footer>
@@ -207,7 +213,7 @@ const IngredienteModal = ({
             </Modal.Body>
           </Modal>
         </>
-      )}
+      )};
     </>
   );
 };
