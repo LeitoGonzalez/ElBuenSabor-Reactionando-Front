@@ -11,7 +11,8 @@ export const Register = () => {
       password: "",
       nombre: "",
       apellido: "",
-      telefono: ""
+      telefono: "",
+      rolUsuario: "CLIENTE"
     }
   }
 
