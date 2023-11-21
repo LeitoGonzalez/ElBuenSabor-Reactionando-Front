@@ -8,7 +8,7 @@ const MainProducts = () => {
 
     useEffect(() => {
         const obtenerProductos = async () =>{
-            const response = await ProductoService.getProductosList(window.localStorage.getItem('token'));
+            const response = await ProductoService.getProductosList();
             setProductos(response);
         };
 

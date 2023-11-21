@@ -3,6 +3,7 @@ import { ProductoService } from "../../services/ProductoService";
 import { Button, Container, Table } from "react-bootstrap";
 import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito";
 import { DTOProducto } from "../../types/DTOProducto";
+import useIsLoggedIn from "../../hooks/useIsLoggedIn";
 
 /* import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito"; */
 type ProductListProp = {
@@ -27,10 +28,8 @@ const ProductosList = ({
   //useState lista de productos
   const [productos, setProductos] = useState<DTOProducto[]>();
 
-
   const handleClick = (producto: DTOProducto) => {
-
-    const detalleProductoItem : TypeDetalleCarrito ={
+    const detalleProductoItem: TypeDetalleCarrito = {
       cantidad: 1,
       precioVenta: producto.precio,
       subTotal: producto.precio,
@@ -55,8 +54,8 @@ const ProductosList = ({
 
     const updatedProducts = [...detalleProducto, detalleProductoItem];
     setDetalleProducto(updatedProducts);
-    setCountProducts(countProducts+1);
-    setTotal(total+(detalleProductoItem.cantidad*producto.precio))
+    setCountProducts(countProducts + 1);
+    setTotal(total + detalleProductoItem.cantidad * producto.precio);
   };
 
   //useEffect para obtener lista de productos
@@ -73,18 +72,7 @@ const ProductosList = ({
   console.log(JSON.stringify(productos, null, 2));
 
 
-
-
-  //muestra el boton de agregar solo si esta logeado
-  const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Verifica si hay un token en el estado local al cargar el componente
-    const storedToken = window.localStorage.getItem("token");
-    if (storedToken) {
-      setToken(storedToken);
-    }
-  }, []);
+  const isLoggedIn = useIsLoggedIn();
 
 
   return (
@@ -118,14 +106,16 @@ const ProductosList = ({
                   ></img>
                 </td>
                 <td>
-                  {token ? (
+                  {isLoggedIn ? (
                     <Button
                       variant="primary"
                       onClick={() => handleClick(producto)}
                     >
                       Agregar a Carrito
                     </Button>
-                  ):("Inicia sesión para agregar al carrito")}
+                  ) : (
+                    "Inicia sesión para agregar al carrito"
+                  )}
                 </td>
               </tr>
             ))}
