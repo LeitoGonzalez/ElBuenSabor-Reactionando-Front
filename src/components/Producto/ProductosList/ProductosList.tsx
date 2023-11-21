@@ -3,7 +3,6 @@ import { Button, Container, Table } from "react-bootstrap";
 import { TypeDetalleCarrito } from "../../../types/TypeDetalleCarrito";
 import { DTOProducto } from "../../../types/DTOProducto";
 import { ProductoService } from "../../../services/ProductoService";
-import useIsLoggedIn from "../../../hooks/useIsLoggedIn";
 import { useAuth } from "../../../context/AuthContext";
 
 /* import { TypeDetalleCarrito } from "../../types/TypeDetalleCarrito"; */

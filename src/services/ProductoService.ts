@@ -1,6 +1,7 @@
 import { DTOProducto } from "../types/DTOProducto";
 import { Producto } from "../types/Producto";
 
+
 const BASE_URL = "http://localhost:8080/api/v1/productos";
 
 export const ProductoService = {

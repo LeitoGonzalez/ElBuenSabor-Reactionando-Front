@@ -8,7 +8,7 @@ import ABMIngrediente from "../pages/ABMIngrediente";
 import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 import MPedidos from "../pages/MPedidos";
 import AdminEmpleadoRoute from "../components/PrivateRoute/AdminEmpleadoRoute";
-import ProductosList from "../components/Producto/ProductosList/ProductosList";
+import Producto from "../pages/Producto";
 
 const AppRoutes: React.FC = () => {
 
@@ -24,7 +24,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/abmingredientes" element={<ABMIngrediente/>}/>
       <Route path="/abmpedidos" element={<PrivateRoute element={<MPedidos/>}/>}/>
       <Route path="/contacto" element={<Contacto />} />
-      <Route path="/producto" element={<ProductosList />} />
+      <Route path="/producto" element={<Producto />} />
     </Routes>
   );
 };
