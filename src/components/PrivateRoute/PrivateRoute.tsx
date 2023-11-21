@@ -3,14 +3,14 @@ type PrivateRouteProps = {
 }
 
 import { Navigate } from "react-router-dom";
-import useIsLoggedIn from "../../hooks/useIsLoggedIn";
+import { useAuth } from "../../context/AuthContext";
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({element}:PrivateRouteProps) => {
-  
-  const isLoggedIn: boolean = useIsLoggedIn();
+
+    const {state} = useAuth();
   
     return (<>
-        {isLoggedIn ? element : <Navigate to='/' /> };
+        {state.isAuthenticated ? element : <Navigate to='/' /> };
     </>);
 }
 export default PrivateRoute
