@@ -9,16 +9,24 @@ export const IngredieteService = {
   //Declaramos los metodos
 
   //Devuelve una lista de todos los ingredientes.
-  getIngredientesList: async (): Promise<DTOIngrediente[]> => {
-    const response = await fetch(`${BASE_URL}`,{
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      }
-    });
-    const data = await response.json();
+  getIngredientesList: async (token: string | null): Promise<DTOIngrediente[]> => {
+    try {
+      const response = await fetch(`${BASE_URL}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
 
-    return data;
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      console.error("Error de solicitud: ", error);
+      throw new Error();
+    }
   },
 
   //Devuelve el ingrediente por su id.
@@ -31,14 +39,16 @@ export const IngredieteService = {
 
   //Crear un ingrediente.
   createIngrediente: async (
-    ingredient: DTOIngrediente
+    ingredient: DTOIngrediente, 
+    token: string | null
   ): Promise<DTOIngrediente> => {
     const response = await fetch(`${BASE_URL}/newIngrediente`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
-      body: JSON.stringify(ingredient), //Serializacion: se utiliza para convertir un objeto JavaScript (en este caso, ingredient) en una cadena de texto en formato JSON.
+      body: JSON.stringify(ingredient),
     });
 
     const data = await response.json();
@@ -49,26 +59,40 @@ export const IngredieteService = {
   //Actualizar un ingrediente. Le paso el id de Ingrediente y me devuelve el Ingrediente actualizado.
   updateIngrediente: async (
     id: number,
-    ingredient: DTOIngrediente
+    ingredient: DTOIngrediente,
+    token: string | null
   ): Promise<DTOIngrediente> => {
-    const response = await fetch(`${BASE_URL}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(ingredient),
-    });
+    try {
+      const response = await fetch(`${BASE_URL}/updateIngrediente/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify(ingredient),
+      });
 
-    const data = await response.json();
-
-    return data;
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      throw new Error();
+    }
   },
 
   //Eliminar el ingrediente por el id. Void indica que una funcion no devuelve ningun valor especifico.
-  deleteIngrediente: async (id: number): Promise<void> => {
-    await fetch(`${BASE_URL}/${id}`, {
-      method: "DELETE",
-    });
+  deleteIngrediente: async (id: number, token: string | null): Promise<void> => {
+    try {
+      await fetch(`${BASE_URL}/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+    }
   },
 };
 

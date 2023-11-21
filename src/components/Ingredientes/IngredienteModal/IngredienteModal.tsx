@@ -65,9 +65,9 @@ const IngredienteModal = ({
     try {
       const isNew = ingredient.id === 0;
       if (isNew) {
-        await IngredieteService.createIngrediente(ingredient);
+        await IngredieteService.createIngrediente(ingredient, window.localStorage.getItem('token'));
       } else {
-        await IngredieteService.updateIngrediente(ingredient.id, ingredient);
+        await IngredieteService.updateIngrediente(ingredient.id, ingredient, window.localStorage.getItem('token'));
       }
       toast.success(isNew ? "Ingrediente creado" : "Ingrediente actualizado", {
         position: "top-center",
@@ -83,15 +83,12 @@ const IngredienteModal = ({
   //DELETE
   const handleDelete = async (ingredient: DTOIngrediente) => {
     try {
-      await IngredieteService.deleteIngrediente(ingredient.id);
-      toast.success("Ingrediente eliminado con exito", {
-        position: "top-center",
-      });
+      await IngredieteService.deleteIngrediente(ingredient.id, window.localStorage.getItem('token'));
+      
       onHide();
       refreshData((prevState) => !prevState);
     } catch (error) {
       console.error(error);
-      toast.error("Ha ocurrido un error");
     }
   };
 

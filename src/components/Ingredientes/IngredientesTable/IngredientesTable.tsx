@@ -54,7 +54,7 @@ const IngredientesTable = () => {
   useEffect(() => {
     //Llamamos a la funcion para obtener todos los ingredientes declarados en el ingredienteService
     const fetchIngredientes = async () => {
-      const ingredientes = await IngredieteService.getIngredientesList();
+      const ingredientes = await IngredieteService.getIngredientesList(window.localStorage.getItem('token'));
       setIngredientes(ingredientes);
     };
     fetchIngredientes();
