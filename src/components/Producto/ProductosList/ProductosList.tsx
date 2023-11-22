@@ -33,7 +33,7 @@ const ProductosList = ({
   const handleClick = (producto: DTOProducto) => {
     const detalleProductoItem : TypeDetalleCarrito ={
       cantidad: 1,
-      precioVenta: producto.costo,
+      precioVenta: producto.precio,
       subTotal: producto.precio,
       productoId: producto.id,
       titulo: producto.denominacion,
