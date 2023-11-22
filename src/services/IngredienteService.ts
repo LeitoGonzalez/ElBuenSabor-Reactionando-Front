@@ -10,7 +10,7 @@ export const IngredieteService = {
 
   //Devuelve una lista de todos los ingredientes.
   getIngredientesList: async (): Promise<DTOIngrediente[]> => {
-    const response = await fetch(`${BASE_URL}`);
+    const response = await fetch(`${BASE_URL}/list`);
     const data = await response.json();
 
     return data;
@@ -26,12 +26,14 @@ export const IngredieteService = {
 
   //Crear un ingrediente.
   createIngrediente: async (
-    ingredient: DTOIngrediente
+    ingredient: DTOIngrediente,
+    token: string | null
   ): Promise<DTOIngrediente> => {
-    const response = await fetch(`${BASE_URL}/newIngrediente`, {
+    const response = await fetch(`${BASE_URL}/admin/add`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(ingredient), //Serializacion: se utiliza para convertir un objeto JavaScript (en este caso, ingredient) en una cadena de texto en formato JSON.
     });
@@ -44,12 +46,14 @@ export const IngredieteService = {
   //Actualizar un ingrediente. Le paso el id de Ingrediente y me devuelve el Ingrediente actualizado.
   updateIngrediente: async (
     id: number,
-    ingredient: DTOIngrediente
+    ingredient: DTOIngrediente,
+    token: string | null
   ): Promise<DTOIngrediente> => {
     const response = await fetch(`${BASE_URL}/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(ingredient),
     });
@@ -60,9 +64,13 @@ export const IngredieteService = {
   },
 
   //Eliminar el ingrediente por el id. Void indica que una funcion no devuelve ningun valor especifico.
-  deleteIngrediente: async (id: number): Promise<void> => {
-    await fetch(`${BASE_URL}/${id}`, {
+  deleteIngrediente: async (id: number , token: string | null): Promise<void> => {
+    await fetch(`${BASE_URL}/admin/delete/${id}`, {
       method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
     });
   },
 };

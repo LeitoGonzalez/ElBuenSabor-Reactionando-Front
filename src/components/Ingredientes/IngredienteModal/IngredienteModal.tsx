@@ -26,6 +26,18 @@ type IngredientModalProps = {
   refreshData: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+const schemaRubroIngrediente = () => {
+  return Yup.object().shape({
+    denominacion: Yup.string().required("Este campo es requerido")
+  })
+}
+
+const schemaUnidadMedida = () => {
+  return Yup.object().shape({
+    denominacion: Yup.string().required("Este campo es requerido")
+  })
+}
+
 //Yup (esquema de validacion)
 const validationSchema = () => {
   return Yup.object().shape({
@@ -34,12 +46,11 @@ const validationSchema = () => {
       "El nombre del ingrediente es requerido"
     ),
     precioCompra: Yup.number().min(0).required("El precio es obligatorio"),
-    tipoUnidadMedida: Yup.string().required("Elije una unidad de medida"),
-    rubroIngrediente: Yup.string().required(
-      "El rubro del Ingrediente es requerido"
-    ),
+    rubroIngrediente: schemaRubroIngrediente(),
+    unidadMedida: schemaUnidadMedida()
   });
 };
+
 
 const IngredienteModal = ({
   show,
@@ -65,9 +76,9 @@ const IngredienteModal = ({
     try {
       const isNew = ingredient.id === 0;
       if (isNew) {
-        await IngredieteService.createIngrediente(ingredient);
+        await IngredieteService.createIngrediente(ingredient, window.localStorage.getItem('token'));
       } else {
-        await IngredieteService.updateIngrediente(ingredient.id, ingredient);
+        await IngredieteService.updateIngrediente(ingredient.id, ingredient, window.localStorage.getItem('token'));
       }
       toast.success(isNew ? "Ingrediente creado" : "Ingrediente actualizado", {
         position: "top-center",
@@ -83,7 +94,7 @@ const IngredienteModal = ({
   //DELETE
   const handleDelete = async (ingredient: DTOIngrediente) => {
     try {
-      await IngredieteService.deleteIngrediente(ingredient.id);
+      await IngredieteService.deleteIngrediente(ingredient.id, window.localStorage.getItem('token'));
       toast.success("Ingrediente eliminado con exito", {
         position: "top-center",
       });
@@ -173,8 +184,8 @@ const IngredienteModal = ({
                     value={formik.values.unidadMedida.denominacion}
                   >
                     <option value="">Seleccionar</option>
-                    <option value="Gramo">Gramos</option>
-                    <option value="Unidad">Unidad</option>
+                    <option value="gramos">Gramos</option>
+                    <option value="litros">Litros</option>
                   </FormSelect>
                   <Form.Control.Feedback type="invalid">
                     {formik.errors.denominacion}
@@ -190,8 +201,8 @@ const IngredienteModal = ({
                     value={formik.values.rubroIngrediente.denominacion}
                   >
                     <option value="">Seleccionar</option>
-                    <option value="Verdura">Verdura</option>
-                    <option value="Condimento">Condimento</option>
+                    <option value="verdura">Verdura</option>
+                    <option value="condimento">Condimento</option>
                   </FormSelect>
                   <Form.Control.Feedback type="invalid">
                     {formik.errors.denominacion}

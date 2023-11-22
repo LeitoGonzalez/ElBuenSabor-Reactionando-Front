@@ -12,9 +12,6 @@ const IngredientesTable = () => {
     return {
       id: 0,
       denominacion: "",
-      fechaHoraAlta: new Date(),
-      fechaHoraBaja: null,
-      fechaHoraModificacion: null,
       precioCompra: 0,
       stockActual: 0,
       stockMinimo: 0,

@@ -89,7 +89,7 @@ const Header = () => {
                   <Dropdown.Item onClick={() => navigate("/abmproductos")}>
                     ABM Productos
                   </Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">
+                  <Dropdown.Item onClick={() => navigate("/abmingredientes")}>
                     ABM Ingredientes
                   </Dropdown.Item>
                   <Dropdown.Item href="#/action-3">ABM Otra cosa</Dropdown.Item>
