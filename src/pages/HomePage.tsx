@@ -1,5 +1,5 @@
-import Carrousel from "../components/PageComponents/Carrousel/Carrousel";
-import MainProducts from "../components/PageComponents/MainProducts/MainProducts";
+import Carrousel from "../components/Carrousel/Carrousel";
+import MainProducts from "../components/MainProducts/MainProducts";
 
 const HomePage = () => {
   return <>
