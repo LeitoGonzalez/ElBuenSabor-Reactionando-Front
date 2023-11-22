@@ -7,6 +7,8 @@ import ABMProducto from "../pages/ABMProducto";
 import ABMIngrediente from "../pages/ABMIngrediente";
 import AdminEmpleadoRoute from "../components/PrivateRoute/AdminEmpleadoRoute";
 import MPedidos from "../pages/MPedidos";
+import Producto from "../pages/Producto";
+import PrivateRoute from "../components/PrivateRoute/PrivateRoute";
 
 const AppRoutes: React.FC = () => {
 
@@ -18,6 +20,8 @@ const AppRoutes: React.FC = () => {
       <Route path="/historial" element={<Historial />} />
       <Route path="/aboutus" element={<AboutUs />} />
       <Route path="/contacto" element={<Contacto />} />
+      <Route path="/producto" element={<Producto />} />
+      <Route path="/abmpedidos" element={<PrivateRoute element={<MPedidos/>}/>}/>
     </Routes>
   );
 };

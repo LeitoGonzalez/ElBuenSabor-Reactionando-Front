@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { ProductoService } from "../../../services/ProductoService";
-import { Producto } from "../../../types/Producto";
 import { Button, Container, Table } from "react-bootstrap";
 import { TypeDetalleCarrito } from "../../../types/TypeDetalleCarrito";
 
@@ -28,14 +27,14 @@ const ProductosList = ({
   setCountProducts,
 }: ProductListProp) => {
   //useState lista de productos
-  const [productos, setProductos] = useState<Producto<"COCINA" | "BEBIDA">[]>();
+  const [productos, setProductos] = useState<DTOProducto[]>();
 
 
   const handleClick = (producto: DTOProducto) => {
     const detalleProductoItem : TypeDetalleCarrito ={
       cantidad: 1,
-      precioVenta: producto.precioVenta,
-      subTotal: producto.precioVenta,
+      precioVenta: producto.costo,
+      subTotal: producto.precio,
       productoId: producto.id,
       titulo: producto.denominacion,
       descripcion: producto.descripcion,
@@ -58,7 +57,7 @@ const ProductosList = ({
     const updatedProducts = [...detalleProducto, detalleProductoItem];
     setDetalleProducto(updatedProducts);
     setCountProducts(countProducts+1);
-    setTotal(total+(detalleProductoItem.cantidad*producto.precioVenta))
+    setTotal(total+(detalleProductoItem.cantidad*producto.precio))
   };
 
   //useEffect para obtener lista de productos
@@ -109,8 +108,8 @@ const ProductosList = ({
               <tr key={producto.id}>
                 <td>{producto.denominacion}</td>
                 <td>{producto.descripcion}</td>
-                <td>{producto.precioVenta}</td>
-                <td>{producto.rubroProducto.denominacion}</td>
+                <td>{producto.precio}</td>
+                <td>{producto.rubroProducto?.denominacion}</td>
                 <td>
                   <img
                     src={producto.urlImagen}
