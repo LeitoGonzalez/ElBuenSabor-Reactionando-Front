@@ -19,7 +19,11 @@ export interface DTOProducto {
     
     rubroProducto: {
         id: number;
+<<<<<<< HEAD
+        denominacion: string;
+=======
         denominacion: string | null;
+>>>>>>> auxiliar
     } | null;
 
     urlImagen: string;
