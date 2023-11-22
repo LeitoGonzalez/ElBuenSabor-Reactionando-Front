@@ -24,7 +24,7 @@ const PedidosList = () => {
 
   console.log(JSON.stringify(pedidos, null, 2));
 
-  const handleCambio = async (pedido: DTOPedido) => {
+  const handleCambio = async (pedido: number) => {
     // Guardar el cambio en el servidor
     await PedidoService.putActualizarPedido(
       pedido,
@@ -42,7 +42,6 @@ const PedidosList = () => {
           <tr>
             <th>ID</th>
             <th>Estado</th>
-            <th>FechaHoraAlta</th>
             <th>Cambiar</th>
           </tr>
         </thead>
@@ -51,8 +50,7 @@ const PedidosList = () => {
             <tr>
               <td>{pedido.id}</td>
               <td>{pedido.estadoPedido}</td>
-              <td>{pedido.fechaHoraAlta}</td>
-              <td><Button>Cambiar estado</Button></td>
+              <td><Button onClick={()=>handleCambio(pedido.id)}>Cambiar estado</Button></td>
             </tr>
           )}
         </tbody>

@@ -23,8 +23,8 @@ export const PedidoService = {
         return data;
     },    
 
-    putActualizarPedido: async (pedido: DTOPedido, token: string | null): Promise<Pedido> => {
-      const response = await fetch(`${BASE_URL}/admin/updatePedido` ,{
+    putActualizarPedido: async (pedido: number, token: string | null): Promise<Pedido> => {
+      const response = await fetch(`${BASE_URL}/admin/updatePedido?pedidoID=${pedido}` ,{
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
