@@ -75,11 +75,12 @@ export const CarritoHeader = ({
       <Container className="mt-4">
         <h1 className="py-4">Tienda</h1>
 
-        <Container className="flex justify-content-end">
-          <div className="carrito flex flex-row justify-content-end align-content-end align-items-end">
+        <Container>
+          <div className="d-flex justify-content-end">
             <div
               className="container-cart-icon"
               onClick={() => setActive(!active)}
+              style={{maxWidth: "3rem"}}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
