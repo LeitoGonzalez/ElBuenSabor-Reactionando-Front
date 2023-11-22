@@ -1,7 +1,7 @@
 import { TypeDetalleCarrito } from "../../../types/TypeDetalleCarrito";
 import { FormaPago } from "../../../types/Enums/FormaPago";
 import { useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
+import { Button, Form, Modal, Table } from "react-bootstrap";
 import { TipoEnvio } from "../../../types/Enums/TipoEnvio";
 import { Pedido } from "../../../types/Pedido";
 import { EstadoPedido } from "../../../types/Enums/EstadoPedido";
@@ -21,7 +21,6 @@ const PagoModal = ({ show, detalleCarrito, onHide, total }: PagoModalProps) => {
   const handleSaveUpdate = async (pedido: Pedido) => {
     try {
       await PedidoService.createPedido(pedido, window.localStorage.getItem("token"));
-      console.log("A");
       onHide(); //Una vez que se crea el producto, se esconde el Modal
     } catch (error) {
       console.error(error);
@@ -39,7 +38,7 @@ const PagoModal = ({ show, detalleCarrito, onHide, total }: PagoModalProps) => {
       }
       
     }));
-    console.log(detallePedidos);
+
     const pedido: Pedido = {
       fechaHoraAlta: new Date(),
       fechaHoraPedido: new Date(),
@@ -61,15 +60,25 @@ const PagoModal = ({ show, detalleCarrito, onHide, total }: PagoModalProps) => {
 
       <Modal.Body>
         <div>
-          {detalleCarrito.map((product) => (
-            <div className="cart-product" key={product.productoId}>
-              <div>
-                <span>{product.cantidad} </span>
-                <p>{product.titulo}</p>
-                <span>${product.precioVenta}</span>
-              </div>
-            </div>
+          <Table>
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+              </tr>
+            </thead>  
+            <tbody>
+            {detalleCarrito.map((product) => (
+              <tr key={product.productoId}>
+                <td>{product.titulo}</td>
+                <td>{product.cantidad}</td>
+                <td>{product.subTotal}</td>
+              </tr>
           ))}
+            </tbody>
+          </Table>
+          
         </div>
 
         <Form onSubmit={handleSubmit}>

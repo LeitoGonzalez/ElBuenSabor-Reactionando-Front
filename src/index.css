@@ -34,8 +34,8 @@ header {
 
 .count-products {
 	position: absolute;
-	top: 55%;
-	right: 0;
+
+	top: 17.8rem;
 
 	background-color: #000;
 	color: #fff;
@@ -45,7 +45,7 @@ header {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-  border-radius: 50%;
+  	border-radius: 50%;
 
 }
 
