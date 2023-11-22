@@ -1,9 +1,9 @@
-/*  import { DTOProducto } from "./DTOProducto";  */
+import { DTOProductoCarrito } from "./DTOProductoCarrito";
 
 
 export interface DetallePedido{
     cantidad: number;
     subtotal: number;
-/*     producto: DTOProducto;  */
+    producto: DTOProductoCarrito;  
 
 }
