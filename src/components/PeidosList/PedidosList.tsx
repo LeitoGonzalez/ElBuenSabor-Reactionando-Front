@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { PedidoService } from "../../services/PedidoService";
 import { DTOPedido } from "../../types/DTOPedido";
+import { Button, Container, Table } from "react-bootstrap";
 
 const PedidosList = () => {
   //useState lista de pedidos
@@ -8,8 +9,6 @@ const PedidosList = () => {
 
   //Refrescar lista, esto lo usamos para el useEffect
   const [refreshData, setRefreshData] = useState(false);
-
-
 
   //useEffect para obtener lista de pedidos
   useEffect(() => {
@@ -25,33 +24,40 @@ const PedidosList = () => {
 
   console.log(JSON.stringify(pedidos, null, 2));
 
-  const handleCambio = async (pedido: DTOPedido)=>{
-          // Guardar el cambio en el servidor
-          await PedidoService.putActualizarPedido(pedido.id, window.localStorage.getItem("token"));
+  const handleCambio = async (pedido: DTOPedido) => {
+    // Guardar el cambio en el servidor
+    await PedidoService.putActualizarPedido(
+      pedido,
+      window.localStorage.getItem("token")
+    );
 
-          // Actualizar la lista de pedidos
-          setRefreshData(!refreshData);
-  }
+    // Actualizar la lista de pedidos
+    setRefreshData(!refreshData);
+  };
 
   return (
-    <div>
-        <h1>PEDIDOS</h1>
-      {pedidos?.map((pedido) => (
-        <div className="pedido" key={pedido.id}>
-          <div className="info-pedido">
-            <span className="cod-pedido">{pedido.id} </span>
-            <span className="fechaHoraAlta-pedido">Fecha Alta Pedido:</span>
-            <span className="tipo-envio-pedido">
-              Fecha Alta Pedido: {pedido.tipoEnvio}
-            </span>
-            <span className="estado-pedido">
-              Fecha Alta Pedido: {pedido.estadoPedido}
-            </span>
-          </div>
-          <button onClick={() => handleCambio(pedido)}>CambiarEstado</button>
-        </div>
-      ))}
-    </div>
+    <Container className="mt-3">
+      <Table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Estado</th>
+            <th>FechaHoraAlta</th>
+            <th>Cambiar</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pedidos?.map((pedido) =>
+            <tr>
+              <td>{pedido.id}</td>
+              <td>{pedido.estadoPedido}</td>
+              <td>{pedido.fechaHoraAlta}</td>
+              <td><Button>Cambiar estado</Button></td>
+            </tr>
+          )}
+        </tbody>
+      </Table>
+    </Container>
   );
 };
 

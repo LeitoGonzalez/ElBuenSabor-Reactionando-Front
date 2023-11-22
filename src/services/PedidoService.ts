@@ -23,13 +23,14 @@ export const PedidoService = {
         return data;
     },    
 
-    putActualizarPedido: async (pedidoID: number,token: string | null): Promise<Pedido> => {
-      const response = await fetch(`${BASE_URL}/updatePedido?pedidoID=${pedidoID}` ,{
+    putActualizarPedido: async (pedido: DTOPedido, token: string | null): Promise<Pedido> => {
+      const response = await fetch(`${BASE_URL}/admin/updatePedido` ,{
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "AUTHORIZATION": `Bearer ${token}`
-        }
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify(pedido)
       });
       const data = await response.json();
 
